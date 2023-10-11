@@ -84,7 +84,7 @@ export const OutlineButton = ({
       type={type}
       className={`${
         (beforeIcon || afterIcon) && "flex justify-center items-center"
-      } text-incoverGreen bg-white border-incoverGreen hover:text-[#004822] hover:border-[#004822] disabled:text-[#C8CCD0] disabled:border-[#C8CCD0] border-[1px] py-4 px-6 text-[14px] font-[500] rounded-lg focus:outline-none ${className}`}
+      } text-incoverGreen bg-white border-solid border-incoverGreen hover:text-[#004822] hover:border-[#004822] disabled:text-[#C8CCD0] disabled:border-[#C8CCD0] border-[1px] py-4 px-6 text-[14px] font-[500] rounded-lg focus:outline-none ${className}`}
       onClick={onClick}
       disabled={disabled ? true : false}
       {...rest}
@@ -124,7 +124,7 @@ export const OtherButton = ({
     <button
       type={type}
       className={`${(loader || beforeIcon || afterIcon) && "flex  items-center"}
-       border-[1px] rounded-[4px] focus:outline-none ${className}`}
+       border-[1px] border-solid rounded-[4px] focus:outline-none ${className}`}
       onClick={onClick}
       disabled={disabled ? true : false}
       {...rest}

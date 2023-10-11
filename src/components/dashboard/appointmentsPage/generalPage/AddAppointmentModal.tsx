@@ -65,8 +65,8 @@ const AddAppointmentModal = ({
             // onSubmit={handleSubmit(onSubmit)}
           >
             <div className="px-10 flex flex-col gap-[32px]">
-              <div className="flex flex-col gap-[8px]">
-                <CustomInputField
+              <div className="grid grid-cols-2 gap-10 justify-between w-[100%] ">
+              <CustomInputField
                   type="text"
                   label="Policy Number"
                   errors={errors.policyNumber}
@@ -74,8 +74,6 @@ const AddAppointmentModal = ({
                   {...register("policyNumber")}
                   //   defaultValue={policyNumber}
                 />
-              </div>
-              <div className="grid grid-cols-2 gap-10 justify-between w-[100%] ">
                 <CustomSelect
                   placeholder="Claim Vehicle"
                   options={[]}
@@ -83,8 +81,6 @@ const AddAppointmentModal = ({
                   name="RegisteredVehicleInfoId"
                 //   defaultValue={details?.Id}
                   handleChange={(e, a) => handleChange(e, a)}
-                //   className="w-[302px]"
-                  isDisabled
                 />
                 <CustomInputField
                   type="date"
@@ -93,8 +89,6 @@ const AddAppointmentModal = ({
                   // min={new Date().toISOString().split("T")[0]}
                   onChange={(e: any) => handleInputChange(e)}
                 //   defaultValue={details?.DateOfIncidence}
-                //   style="w-[302px] "
-                  readOnly
                 />
                 <CustomInputField
                   type="time"
@@ -102,7 +96,6 @@ const AddAppointmentModal = ({
                   name="TimeOfAccident"
                   onChange={(e: any) => handleInputChange(e)}
                 //   defaultValue={details.TimeOfAccident}
-                //   style="w-[302px]"
                 />
               </div>
               <div className="flex justify-between gap-[32px] w-[100%] ">
@@ -110,7 +103,7 @@ const AddAppointmentModal = ({
               </div>
             </div>
 
-            <div className="mt-[23px] w-full px-[32px] border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
+            <div className="mt-[23px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
               <div className="flex justify-between">
                 <OutlineButton
                   type="submit"
