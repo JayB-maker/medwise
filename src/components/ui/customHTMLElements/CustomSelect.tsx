@@ -15,19 +15,26 @@ const customStyles: StylesConfig = {
     width: "auto",
     boxShadow: "none",
     appearance: "none",
+    borderColor: state.isFocused || state.hover ? "#006B33" : "#cccccc",
+    "&:hover": {
+      borderColor: "#006B33", // Set your custom hover color
+    },
   }),
   input: (base: any, state: any) => ({
     ...base,
     fontSize: "14px",
+    borderColor: "#006B33",
   }),
 
   singleValue: (base: any) => ({
     ...base,
     color: "#212529",
+    borderColor: "#006B33",
   }),
   valueContainer: (provided, state) => ({
     ...provided,
     overflow: "visible",
+    borderColor: "#006B33",
   }),
   placeholder: (provided, state) => ({
     ...provided,
@@ -89,7 +96,7 @@ const CustomSelect: FC<{
   control?: any;
   errors?: any;
   isMulti?: boolean;
-  extraLabel?: string
+  extraLabel?: string;
 }> = ({
   options,
   isDisabled,
@@ -103,13 +110,16 @@ const CustomSelect: FC<{
   inputValue,
   handleChange,
   isMulti = false,
-  extraLabel
+  extraLabel,
 }) => {
   return (
     <div className={` flex flex-col justify-start  ${containerClass}`}>
-       {extraLabel &&  (<h1 className="text-[#4D5154] text-[14px] lg:leading-[16px] tracking-[0.03px] font-[600] mb-2">
-            {extraLabel} </h1>) }
-    
+      {extraLabel && (
+        <h1 className="text-[#4D5154] text-[14px] lg:leading-[16px] tracking-[0.03px] font-[600] mb-2">
+          {extraLabel}{" "}
+        </h1>
+      )}
+
       <Controller
         name={name}
         control={control}
