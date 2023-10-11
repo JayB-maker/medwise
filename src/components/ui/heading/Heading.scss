@@ -1,0 +1,12 @@
+@import "../_variables";
+
+.page-heading {
+  margin-bottom: 24px;
+  h2 {
+    margin-bottom: 8px;
+    color: $text-black-1;
+  }
+  p {
+    color: $text-black-3;
+  }
+}

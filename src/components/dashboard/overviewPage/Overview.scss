@@ -1,0 +1,78 @@
+@import "../../ui/_variables";
+
+.dashboard-single-wrapper {
+  &.overview {
+    padding: 0;
+
+    .finance-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+
+      .finance-card {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border: 1px solid rgb(157, 157, 157);
+        padding: 16px;
+        border-radius: 8px;
+
+        p {
+          font-size: 14px;
+        }
+        h1 {
+          font-size: 32px;
+        }
+      }
+    }
+  }
+}
+.mini-details {
+  margin-top: 40px;
+
+  .user-details-card {
+    border-radius: 12px;
+    border: 1px solid rgba(200, 204, 208, 1);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 348px;
+
+    .card-details-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .user-role {
+        display: block;
+        padding: 8px 16px;
+        border-radius: 100px;
+        background-color: rgba(0, 109, 240, 0.1);
+        color: rgba(0, 109, 240, 1);
+        font-size: 14px;
+      }
+    }
+
+    .card-details-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .dashboard-single-wrapper {
+    &.overview {
+      .finance-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+  .mini-details{
+    .user-details-card{
+        width: 100%;
+    }
+  }
+}

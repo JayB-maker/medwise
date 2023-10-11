@@ -1,0 +1,47 @@
+$primary-green: #006C33;
+$dark-green: #156B2D;
+$green-1: #CCFEDA;
+$green-2: #F6FFF9;
+$secondary-color: #CEA766;
+$landing-page-bg: #FCFFFD;
+$background: #F5F5F5;
+$white: #FFFFFF;
+$black: #0E0E0E;
+$text-black-1: #1A1B1A;
+$text-black-2: rgba(26, 27, 26, 0.8);
+$text-black-3: rgba(26, 27, 26, 0.6);
+$text-black-4: rgba(26, 27, 26, 0.4);;
+$text-black-5: rgba(26, 27, 26, 0.2);
+$text-black-6: rgba(26, 27, 26, 0.06);
+$red: #EB5757;
+$red-bg: rgba(235, 87, 87, 0.1);
+// $button-width: 10rem;
+// $button-height: 3rem;
+// $input-height: 3rem;
+// $textarea-height: 7rem;
+// $textarea-width: 100%;
+// $border-radius: 5px;
+
+:export {
+  primary-green: $primary-green;
+  dark-green: $dark-green;
+  white: $white;
+  black: $black;
+  green-1: $green-1;
+  green-2: $green-2;
+  landing-page-bg: $landing-page-bg;
+  background: $background;
+  text-black-1: $text-black-1;
+  text-black-2: $text-black-2;
+  text-black-3: $text-black-3;
+  text-black-4: $text-black-4;
+  text-black-5: $text-black-5;
+  text-black-6: $text-black-6;
+  red:$red;
+  red-bg:$red-bg;
+  // button-width: $button-width;
+  // button-height: $button-height;
+  // input-height: $input-height;
+  // textarea-height: $textarea-height;
+  // textarea-width: $textarea-width;
+}

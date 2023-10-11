@@ -1,0 +1,54 @@
+@import "../_variables";
+
+.switch-button__off {
+  background-color: $white !important;
+  border: 1px solid $primary-green;
+  transition: 0.5s;
+}
+
+.switch-button {
+  position: relative;
+  border-radius: 30px;
+  width: 70px;
+  height: 32px;
+  background-color: $primary-green;
+  cursor: pointer;
+
+  .text {
+    color: $white;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    font-size: 12px;
+  }
+
+  .text.off {
+    right: 8px;
+    left: unset;
+    color: $primary-green;
+    transition: 0.5s;
+  }
+
+  .circle {
+    position: absolute;
+    height: 22px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: $text-black-1;
+    transition: 0.5s;
+  }
+  .circle.right {
+    background-color: $primary-green;
+    transition: 0.5s;
+  }
+
+  .circle.left {
+    right: 5px;
+    left: unset;
+  }
+}

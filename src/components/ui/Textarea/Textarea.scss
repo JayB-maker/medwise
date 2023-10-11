@@ -1,0 +1,63 @@
+@import "../_variables";
+
+.textarea-input {
+  .label {
+    color: $text-black-1;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .textarea {
+    outline: none;
+    padding: 14px 16px;
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+    line-height: 22px;
+    size: 16px;
+    font-weight: 400;
+    resize: none;
+    height: 110px;
+    font-family: 'Red Hat Display', sans-serif;
+    -webkit-appearance: none;
+    border: 0.5px solid $text-black-5;
+    background: $white;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-green;
+    }
+
+    &-invert {
+      border: 1px solid $primary-green;
+    }
+    &-invert:focus {
+      outline: none;
+      border-color: $white;
+    }
+    &-error {
+      color: $red;
+      font-size: 12px;
+    }
+    &-error-input {
+      border: 0.5px solid $red;
+      padding: 14px 16px;
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+      line-height: 17px;
+      -webkit-appearance: none;
+      size: 14px;
+    }
+    &-error-input:focus {
+      border: 0.5px solid $red;
+    }
+  }
+}

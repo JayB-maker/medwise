@@ -1,0 +1,75 @@
+@import "../_variables";
+
+.uploading-label {
+  color: $text-black-1;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.file-uploaded-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 22px;
+  background-color: rgba(46, 187, 85, 0.15);
+  border-radius: 8px;
+
+  .uploading {
+    font-size: 12px;
+    font-weight: 400;
+    color: $text-black-1;
+  }
+  .uploaded-text {
+    font-size: 12px;
+    font-weight: 400;
+    color: $text-black-2;
+
+    &.sub {
+      font-weight: 300;
+    }
+  }
+
+  .cancel {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}
+
+.file-uploading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px dashed $primary-green;
+  border-radius: 8px;
+
+  .uploading-img {
+    width: 19px;
+  }
+
+  .uploading-text-div {
+    display: flex;
+    gap: 2px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .uploading-text {
+    font-size: 12px;
+    font-weight: 400;
+    color: $text-black-2;
+
+    &.sub {
+      font-weight: 300;
+    }
+  }
+}

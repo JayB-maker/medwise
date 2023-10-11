@@ -1,0 +1,24 @@
+@import "../_variables";
+
+.file-input {
+  width: fit-content;
+  cursor: pointer;
+  label {
+    color: $primary-green;
+    // text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .label-invert {
+    border: 1px solid $primary-green;
+    color: $primary-green
+  }
+  .label-invert:hover {
+    border: 1px solid $white;
+    color: $text-black-1;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+}

@@ -1,0 +1,90 @@
+@import "../_variables";
+
+.dropdown-input {
+  position: relative;
+
+  .label {
+    color: $text-black-1;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .css-1s2u09g-control,
+  .css-1pahdxg-control {
+    display: flex !important;
+    outline: none;
+    padding: 14px 16px;
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    line-height: 17px;
+    size: 14px;
+    -webkit-appearance: none;
+    border: 0.5px solid $text-black-5;
+    background: $white;
+
+    &:focus{
+      border: 0.5px solid $primary-green;
+    }
+
+    .css-6j8wv5-Input,
+    .css-tlfecz-indicatorContainer,
+    .css-319lph-ValueContainer {
+      padding: 0 !important;
+    }
+
+    .css-1hb7zxy-IndicatorsContainer {
+      padding: 0 !important;
+      span {
+        display: none;
+      }
+    }
+
+
+    &-error {
+      color: $red;
+      font-size: 12px;
+    }
+    &-error-input {
+      border: 0.5px solid $red;
+      padding: 14px 16px;
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+      line-height: 17px;
+      -webkit-appearance: none;
+      size: 14px;
+    }
+    &-error-input:focus {
+      border: 0.5px solid $red;
+    }
+  }
+
+  .css-1pahdxg-control {
+    border: none;
+    outline: none !important;
+
+    &:active {
+      outline: none !important;
+      border: none !important;
+    }
+
+    &:focus {
+      outline: none !important;
+      border: none !important;
+    }
+
+    .css-1gtu0rj-indicatorContainer {
+      padding: 0 !important;
+    }
+  }
+}
+
+// #react-select-3-listbox{
+//   display: block !important;
+//   accent-color: $primary-green;
+//   border: 2px solid $primary-green;
+// }

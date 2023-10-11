@@ -1,0 +1,16 @@
+export enum LOCAL_STORAGE_KEYS {
+  TOKEN = "token",
+  USER = "user",
+  SUB_ACCOUNTS = "subaccounts",
+  USER_BIO_DATA_ID = "userBiodataId",
+  INSURED_USER_BIO_DATA_ID = "insuredUserBiodataId",
+  DETAILS = "details",
+  PRODUCTID = "productId",
+  INCOVER_COMMISSION = "incoverCommission",
+  FIRM_ID = "firmID",
+  PRODUCT_PLAN = "productPlan",
+  VEHICLE_DETAILS = "vehicleDetails",
+  PREMIUM_DATA = "premiumData",
+  TOTAL_PREMIUM = "totalPremium",
+  IS_USER_EXIST = "isUserExist",
+}

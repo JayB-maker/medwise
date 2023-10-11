@@ -1,0 +1,33 @@
+@import "../_variables";
+
+.layout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+
+  .left-layout-div {
+    width: 520px;
+    overflow: hidden;
+    display: block;
+
+    .inner-left-div {
+      // background-color: $text-black-1;
+      width: 520px;
+      position: fixed;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 200px;
+      justify-content: center;
+
+    }
+  }
+
+  .right-layout-div{
+    // width: 100% !important;
+    display: flex;
+    justify-content: center;
+  }
+}

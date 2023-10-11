@@ -1,0 +1,94 @@
+@import "../_variables";
+
+.alert-component {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+
+  .alert {
+    background: $white;
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    box-shadow: 0px 4px 15px rgba(142, 142, 142, 0.15);
+    border: 0.5px solid $primary-green;
+    border-radius: 10px;
+    width: 426px !important;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    margin: 0;
+
+    .arrow {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 7px;
+      cursor: pointer;
+      transition: 0.5s ease;
+
+      &.turn{
+        transform: rotate(90deg);
+      }
+    }
+
+    .close-wrapper {
+      position: absolute;
+      left: -7px;
+      top: -9px;
+      background-color: $white;
+      cursor: pointer;
+      padding: 7px;
+      border: 0.5px solid $primary-green;
+      border-radius: 50%;
+      width: 23px;
+      height: 23px;
+
+      .close-alert {
+        margin: 1px 1px 0 0;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 0;
+        transform: rotate(45deg);
+        color: $primary-green;
+      }
+    }
+
+    h1 {
+      font-size: 20px !important;
+      line-height: 30px;
+      font-weight: 600;
+      color: $text-black-1;
+      margin: 0;
+      line-height: 30px;
+    }
+
+    p.sub-heading {
+      width: 460px;
+      font-size: 16px !important;
+      line-height: 28px;
+      font-weight: 300;
+      margin: 4px 0 0;
+    }
+  }
+
+  .alert-danger-bg {
+    background-color: $primary-green;
+    h1 {
+      color: $white;
+    }
+    p {
+      color: $white;
+    }
+    &::before {
+      content: "";
+      background-color: $white;
+    }
+
+    .close-alert {
+      color: $white;
+    }
+  }
+}

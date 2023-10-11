@@ -1,0 +1,60 @@
+@import "../_variables";
+
+.radio-input {
+  label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+  }
+
+  label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  label span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-color: $white;
+    border: 2px solid $primary-green;
+    border-radius: 50%;
+    transition: 0.3s background-color;
+  }
+
+  .label-invert span {
+    border: 1px solid $primary-green;
+  }
+
+  label span:after {
+    content: "";
+    position: absolute;
+    display: none;
+
+    left: 50%;
+    transform: translateX(-50%);
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background-color: $primary-green;
+    border-radius: 50%;
+  }
+
+  label input:checked ~ span {
+    // background-color: $text-black-5;
+    border: 2px solid $primary-green;
+  }
+
+  label input:checked ~ span:after {
+    display: block;
+  }
+
+  .label-invert input:checked ~ span {
+    background-color: $primary-green;
+    border: 1px solid $primary-green;
+  }
+}

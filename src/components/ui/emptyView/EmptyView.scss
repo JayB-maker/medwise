@@ -1,0 +1,30 @@
+@import "../_variables";
+
+.empty-view {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+  &__icon {
+    width: 90px;
+  }
+  h2 {
+    margin-top: 16px;
+    color: $text-black-3;
+    line-height: 17px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  p {
+    color: $text-black-3;
+    line-height: 17px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}

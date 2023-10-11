@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278 75">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #2fba55;
+        font-family: AtypBLDisplay-Bold, 'Atyp BL Display';
+        font-weight: 700;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3, .cls-4, .cls-5 {
+        font-family: AtypBLDisplay-Medium, 'Atyp BL Display';
+        font-weight: 500;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        font-size: 43.1px;
+      }
+    </style>
+  </defs>
+  <path d="M37.3,2.68C18.06,2.68,2.47,18.27,2.47,37.5s15.59,34.82,34.83,34.82,34.82-15.59,34.82-34.82S56.53,2.68,37.3,2.68Zm-15.62,46.55H9.53l7.36-15.34,6.88,11.21-2.09,4.13Zm12.08,0l-13.6-23.46h12.15l13.59,23.46h-12.14Zm19.15,0l-13.59-23.46h12.14l13.6,23.46h-12.15Z"/>
+  <text class="cls-6" transform="translate(80.44 53.56)"><tspan class="cls-5" x="0" y="0">M</tspan><tspan class="cls-4" x="37.03" y="0">e</tspan><tspan class="cls-3" x="63.1" y="0">d</tspan><tspan class="cls-1" x="90.56" y="0">W</tspan><tspan class="cls-2" x="135.61" y="0">ise</tspan></text>
+</svg>
