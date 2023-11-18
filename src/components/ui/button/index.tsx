@@ -1,4 +1,4 @@
-import Loader from "../loader";
+import Loader from "../loader/loader";
 import "./Button.scss";
 
 interface ButtonProps {

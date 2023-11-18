@@ -3,13 +3,11 @@ import { Button, Input, InputPassword } from "../../../components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { apiQueryMethods, apiUrls } from "../../../utils/api";
 import Alert from "../../../components/ui/alert";
-import { useAppContext } from "../../../AppContext";
 import { dataQueryStatus } from "../../../utils/dataQueryStatus";
-import API from "../../../utils/api/API";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase";
+import { LOCAL_STORAGE_KEYS } from "../../../helpers/localStorageKeys";
 
 const { IDLE, LOADING, SUCCESS, ERROR } = dataQueryStatus;
 
@@ -32,15 +30,41 @@ const Login = () => {
     }
   }, []);
 
-  const { updateToken } = useAppContext();
+  // const { updateToken } = useAppContext();
 
   const logIn = (data: any) => {
+    setStatus(LOADING);
+    setMessage("");
     signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredentials) => console.log(userCredentials))
-      .catch((err) => console.log(err));
+      .then((userCredentials: any) => {
+        console.log(userCredentials);
+        console.log(userCredentials._tokenResponse?.idToken);
+        setStatus(SUCCESS);
+        reset();
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.USER,
+          JSON.stringify(userCredentials)
+        );
+        localStorage.setItem(LOCAL_STORAGE_KEYS.IS_USER_EXIST, "true");
+
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.USER_BIO_DATA_ID,
+          userCredentials._tokenResponse?.idToken
+        );
+
+        // const token = resp.data.jwtToken;
+        // updateToken(token);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((err) => {
+        setStatus(ERROR);
+        console.log(err);
+      });
   };
 
-  // const logIn = async (data: any) => {
+  // const logIn3 = async (data: any) => {
   //   setStatus(LOADING);
   //   setMessage("");
   //   API({

@@ -12,6 +12,7 @@ import DoctorsPage from "./components/dashboard/doctorsPage/generalPage";
 import AppointmentsPage from "./components/dashboard/appointmentsPage/generalPage";
 import PaymentsPage from "./components/dashboard/paymentsPage/generalPage";
 import DepartmentsPage from "./components/dashboard/departmentsPage/generalPage";
+import PatientsPageDetails from "./components/dashboard/patientsPage/detailsPage/details";
 
 export const routes = [
   {
@@ -27,6 +28,13 @@ export const routes = [
     icon: "dashboard",
     component: <PatientsPage />,
     route: "/patients/",
+  },
+  {
+    title: "Patient",
+    subRoutes: [],
+    icon: "dashboard",
+    component: <PatientsPageDetails />,
+    route: "/patients/:id",
   },
   {
     title: "Doctor",

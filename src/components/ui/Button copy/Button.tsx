@@ -2,7 +2,7 @@
 // import Lottie from "react-lottie-player";
 // import Spinner from "@/assets/json/spinner-white.json";
 
-import Loader from "../loader";
+import Loader from "../loader/loader";
 
 // const style = { height: "30px", width: "30px" };
 interface ButtonProps {

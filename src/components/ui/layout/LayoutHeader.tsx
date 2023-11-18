@@ -3,6 +3,7 @@ import { ILayoutProps } from "./LayoutSidebar";
 import { Link, useNavigate } from "react-router-dom";
 import ImageAvatar from "../../../assets/avatar.png";
 import NextIcon from "../../../assets/arrow-right-icon.svg";
+import { useAuth } from "../../../context/AuthContext";
 
 const LayoutHeader = (props: ILayoutProps) => {
   const {
@@ -18,9 +19,16 @@ const LayoutHeader = (props: ILayoutProps) => {
   const navigate = useNavigate();
   const [menu, setMenu] = useState(false);
 
+  // const handleLogout = () => {
+  //   localStorage.removeItem("user");
+  //   localStorage.removeItem("token");
+  //   navigate("/login");
+  // };
+
+  const { logout } = useAuth();
+
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    logout();
     navigate("/login");
   };
 
@@ -66,7 +74,7 @@ const LayoutHeader = (props: ILayoutProps) => {
                   >
                     Profile
                   </Link>
-                  <span className="menu-bar" onClick={handleLogout}>
+                  <span className="menu-bar" onClick={() => handleLogout()}>
                     Logout
                   </span>
                 </div>

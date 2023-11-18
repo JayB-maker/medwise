@@ -62,7 +62,7 @@ const CustomTextArea: React.FC<ICustomTextAreaProps> = React.forwardRef(
           </h1>
         ) : null}
         <textarea
-          className={`bg-white appearance-none border px-4 placeholder:text-[#DADADA] h-[200px] placeholder:text-[16px] placeholder:lg:leading-[24px] placeholder:font-[100] ${
+          className={`bg-white appearance-none border-solid border-[#cccccc] border px-4 placeholder:text-[#DADADA] h-[200px] placeholder:text-[16px] placeholder:lg:leading-[24px] placeholder:font-[100] ${
             readOnly ? "text-Gray bg-[#F5F5F5]" : "text-incoverGray"
           } ${
             errors ? "border-[#EB5757]" : "border-LightGray"

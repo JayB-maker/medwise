@@ -18,8 +18,8 @@ const SuccessfulModal = (props: SuccessfulModal) => {
   } = props;
 
   return (
-    <div className="popup">
-      <div className="popup-container successful">
+    <div className="popup z-[1000000]">
+      <div className="popup-container successful z-[1000000]">
         <img
           src="https://res.cloudinary.com/dm19qay3n/image/upload/v1666004167/internal-dashboard/close_mvfkiq.png"
           alt="close"
