@@ -5,13 +5,14 @@ import Layout from "../../../ui/layout";
 // import { useNavigate } from "react-router";
 import AddDepartmentModal from "./AddDepartmentModal";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";
 import EmptyView from "../../../ui/emptyView";
 import ErrorView from "../../../ui/ErrorView";
 import CardLoader from "../../../ui/cardLoader";
+import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -24,10 +25,11 @@ const DepartmentPage = () => {
   const [status, setStatus] = useState(IDLE);
   const [departmentData, setDepartmentData] = useState<any>([]);
   const [message, setMessage] = useState("");
+  const [deleteModal, setDeleteModal] = useState(false);
 
   // const Navigate = useNavigate();
 
-  const fetchDepartment = async () => {
+  const fetchDepartments = async () => {
     setStatus(LOADING);
     const department: any = [];
     try {
@@ -40,7 +42,9 @@ const DepartmentPage = () => {
         setDepartmentData(department);
       } else {
         setStatus(NULLMODE);
-        setMessage("No department data available, check your internet and try again");
+        setMessage(
+          "No department data available, check your internet and try again"
+        );
       }
     } catch (error: any) {
       if (error.code === "unavailable") {
@@ -55,18 +59,14 @@ const DepartmentPage = () => {
   };
 
   useEffect(() => {
-    fetchDepartment();
+    fetchDepartments();
   }, []);
 
-  const deleteDepartment = async (departmentId: string) => {
-    try {
-      await deleteDoc(doc(db, "department", departmentId));
-      fetchDepartment();
-      toast.success("Department deleted successfully");
-    } catch (error: any) {
-      toast.error(getErrorMessage(error));
-    }
+  const handleDeleteModal = (data: any) => {
+    setDeleteModal(true);
+    setSelectedDepartment(data);
   };
+
   const handleEditModal = (data: any) => {
     setDepartmentModal(true);
     setIsEdit(true);
@@ -119,10 +119,20 @@ const DepartmentPage = () => {
                   <div className="flex flex-col gap-4 p-4">
                     <h3 className="text-[18px]">{department?.name}</h3>
                     <p className="text-[12px]">{department?.description}</p>
-                    {/* <PrimaryButton
-                title="View Profile"
-                onClick={() => Navigate(department?.id)}
-              /> */}
+                    <div className="mt-5 flex gap-2">
+                      <button
+                        className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
+                        onClick={() => handleEditModal(department)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
+                        onClick={() => handleDeleteModal(department)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -157,6 +167,17 @@ const DepartmentPage = () => {
           closeModal={setDepartmentModal}
           isEdit={isEdit}
           data={selectedDepartment}
+          getData={fetchDepartments}
+        />
+      )}
+      {deleteModal && (
+        <DeleteModal
+          showModal={deleteModal}
+          closeModal={setDeleteModal}
+          data={selectedDepartment}
+          getData={fetchDepartments}
+          docKey="departments"
+          message="Every data with this department will be erased and you won't have any access to them again"
         />
       )}
     </Layout>

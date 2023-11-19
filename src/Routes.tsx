@@ -12,7 +12,8 @@ import DoctorsPage from "./components/dashboard/doctorsPage/generalPage";
 import AppointmentsPage from "./components/dashboard/appointmentsPage/generalPage";
 import PaymentsPage from "./components/dashboard/paymentsPage/generalPage";
 import DepartmentsPage from "./components/dashboard/departmentsPage/generalPage";
-import PatientsPageDetails from "./components/dashboard/patientsPage/detailsPage/details";
+import PatientsPageDetails from "./components/dashboard/patientsPage/detailsPage/Details";
+import DoctorsPageDetails from "./components/dashboard/doctorsPage/detailsPage/Details";
 
 export const routes = [
   {
@@ -42,6 +43,13 @@ export const routes = [
     icon: "dashboard",
     component: <DoctorsPage />,
     route: "/doctors/",
+  },
+  {
+    title: "Doctor",
+    subRoutes: [],
+    icon: "dashboard",
+    component: <DoctorsPageDetails />,
+    route: "/doctors/:id",
   },
   {
     title: "Appointment",

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ModalContainer } from "../../../ui/modal/ModalContainer";
-import CloseIcon from "../../../..//assets/close-icon.svg";
+import CloseIcon from "../../../../assets/close-icon.svg";
+import ProfileIcon from "../../../../assets/profile-picture.svg";
 import CustomInputField from "../../../ui/customHTMLElements/CustomInputField";
 import { useForm } from "react-hook-form";
 import CustomSelect from "../../../ui/customHTMLElements/CustomSelect";
@@ -8,7 +9,7 @@ import { OutlineButton, PrimaryButton } from "../../../ui/Button copy/Button";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
 import CustomTextArea from "../../../ui/customHTMLElements/CustomTextArea";
 import { auth, db, storage } from "../../../../firebase";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -129,18 +130,53 @@ const AddDoctorModal = ({
     }
   };
 
+  const handleUpdate = async (request: any) => {
+    setStatus(LOADING);
+    request.image === ""
+      ? (request.image = data.image)
+      : (request.image = request.image);
+
+    console.log(request);
+    try {
+      const docRef = doc(db, "doctors", data?.id);
+
+      await updateDoc(docRef, {
+        ...request,
+        updatedAt: serverTimestamp(),
+      });
+
+      setStatus(SUCCESS);
+      toast.success("Department successfully updated");
+      closeModal(!showModal);
+      getData();
+    } catch (error: any) {
+      setStatus(ERROR);
+      toast.error(getErrorMessage(error.message));
+    }
+  };
+
   const onSubmit = (data: any) => {
-    data.image = image;
-    console.log(data);
-    handleAdd(data);
+    isEdit
+      ? ((data.image = image), handleUpdate(data))
+      : ((data.image = image), handleAdd(data));
   };
 
   useEffect(() => {
     if (isEdit) {
-      const { name, age, address, phoneNumber, gender } = data || {};
+      const {
+        firstName,
+        lastName,
+        email,
+        speciality,
+        address,
+        phoneNumber,
+        gender,
+      } = data || {};
 
-      setValue("name", name);
-      setValue("age", age);
+      setValue("firstName", firstName);
+      setValue("lastName", lastName);
+      setValue("email", email);
+      setValue("speciality", speciality);
       setValue("phoneNumber", phoneNumber);
       setValue("address", address);
       setValue("gender", gender);
@@ -160,7 +196,7 @@ const AddDoctorModal = ({
         <div className="w-full top-0 left-0 px-[36px] py-4 border-0 border-b-[1px] border-solid border-incoverGrey sticky bg-white z-50">
           <div className="flex justify-between items-center">
             <h2 className="text-[24px] leading-[32px] font-[600]">
-              Add Doctor
+              {isEdit ? "Edit Doctor" : "Add Doctor"}
             </h2>
             <img
               src={CloseIcon}
@@ -195,7 +231,9 @@ const AddDoctorModal = ({
                         ? (window.URL ? URL : webkitURL).createObjectURL(
                             imageURL[0]
                           )
-                        : "https://res.cloudinary.com/dm19qay3n/image/upload/v1685703775/internal-dashboard/profilePicture_idhxy1.svg"
+                        : isEdit && data.image !== ""
+                        ? data.image
+                        : ProfileIcon
                     }
                     alt=""
                     className="w-full"
@@ -244,8 +282,8 @@ const AddDoctorModal = ({
                 <CustomSelect
                   placeholder="Gender"
                   options={[
-                    { label: "Male", value: "1" },
-                    { label: "Female", value: "2" },
+                    { label: "Male", value: "Male" },
+                    { label: "Female", value: "Female" },
                   ]}
                   control={control}
                   name="gender"
@@ -253,7 +291,7 @@ const AddDoctorModal = ({
                   handleChange={(e, a) => handleChange(e, a)}
                 />
               </div>
-              <CustomTextArea placeholder="Address" />
+              <CustomTextArea placeholder="Address" {...register("address")} />
               <div className="flex justify-between gap-[32px] w-[100%] "></div>
             </div>
 

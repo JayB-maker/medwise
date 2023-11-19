@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ModalContainer } from "../../../ui/modal/ModalContainer";
-import CloseIcon from "../../../..//assets/close-icon.svg";
+import CloseIcon from "../../../../assets/close-icon.svg";
+import ProfileIcon from "../../../../assets/profile-picture.svg";
 import CustomInputField from "../../../ui/customHTMLElements/CustomInputField";
 import { useForm } from "react-hook-form";
 import { OutlineButton, PrimaryButton } from "../../../ui/Button copy/Button";
@@ -10,7 +11,9 @@ import { db, storage } from "../../../../firebase";
 import {
   addDoc,
   collection,
+  doc,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getErrorMessage } from "../../../../utils/helpers";
@@ -25,11 +28,13 @@ const AddDepartmentModal = ({
   closeModal,
   isEdit,
   data,
+  getData,
 }: {
   showModal: boolean;
   closeModal: Dispatch<SetStateAction<boolean>>;
   isEdit?: boolean;
   data?: any;
+  getData?: any;
 }): JSX.Element => {
   const {
     register,
@@ -100,7 +105,7 @@ const AddDepartmentModal = ({
           setStatus(SUCCESS);
           toast.success("Department successfully added");
           closeModal(!showModal);
-          // getData();
+          getData();
         })
         .catch((error) => {
           setStatus(ERROR);
@@ -112,10 +117,35 @@ const AddDepartmentModal = ({
     }
   };
 
+  const handleUpdate = async (request: any) => {
+    setStatus(LOADING);
+    request.image === ""
+      ? (request.image = data.image)
+      : (request.image = request.image);
+
+    console.log(request);
+    try {
+      const docRef = doc(db, "departments", data?.id);
+
+      await updateDoc(docRef, {
+        ...request,
+        updatedAt: serverTimestamp(),
+      });
+
+      setStatus(SUCCESS);
+      toast.success("Department successfully updated");
+      closeModal(!showModal);
+      getData();
+    } catch (error: any) {
+      setStatus(ERROR);
+      toast.error(getErrorMessage(error.message));
+    }
+  };
+
   const onSubmit = (data: any) => {
-    data.image = image;
-    console.log(data);
-    handleAdd(data);
+    isEdit
+      ? ((data.image = image), handleUpdate(data))
+      : ((data.image = image), handleAdd(data));
   };
 
   useEffect(() => {
@@ -175,7 +205,9 @@ const AddDepartmentModal = ({
                         ? (window.URL ? URL : webkitURL).createObjectURL(
                             imageURL[0]
                           )
-                        : "https://res.cloudinary.com/dm19qay3n/image/upload/v1685703775/internal-dashboard/profilePicture_idhxy1.svg"
+                        : isEdit && data.image !== ""
+                        ? data.image
+                        : ProfileIcon
                     }
                     alt=""
                     className="w-full"

@@ -5,13 +5,14 @@ import Layout from "../../../ui/layout";
 import AddDoctorModal from "./AddDoctorModal";
 import { useNavigate } from "react-router";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";
 import EmptyView from "../../../ui/emptyView";
 import ErrorView from "../../../ui/ErrorView";
 import CardLoader from "../../../ui/cardLoader";
+import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -22,6 +23,7 @@ const DoctorsPage = () => {
   const [status, setStatus] = useState(IDLE);
   const [doctorData, setDoctorData] = useState<any>([]);
   const [message, setMessage] = useState("");
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const Navigate = useNavigate();
 
@@ -38,7 +40,9 @@ const DoctorsPage = () => {
         setDoctorData(doctor);
       } else {
         setStatus(NULLMODE);
-        setMessage("No doctor data available, check your internet and try again");
+        setMessage(
+          "No doctor data available, check your internet and try again"
+        );
       }
     } catch (error: any) {
       if (error.code === "unavailable") {
@@ -56,15 +60,11 @@ const DoctorsPage = () => {
     fetchDoctors();
   }, []);
 
-  const deletePatient = async (doctorId: string) => {
-    try {
-      await deleteDoc(doc(db, "doctors", doctorId));
-      fetchDoctors();
-      toast.success("Doctor deleted successfully");
-    } catch (error: any) {
-      toast.error(getErrorMessage(error));
-    }
+  const handleDeleteModal = (data: any) => {
+    setDeleteModal(true);
+    setSelectedDoctor(data);
   };
+
   const handleEditModal = (data: any) => {
     setDoctorModal(true);
     setIsEdit(true);
@@ -104,26 +104,41 @@ const DoctorsPage = () => {
             <div className="grid grid-cols-4 gap-10">
               {doctorData?.map((doctor: any, index: any) => (
                 <div
-                  className="rounded-[8px] shadow-lg shadow-[#00000020] bg-white flex flex-col items-center justify-center relative overflow-hidden"
+                  className="rounded-[8px] p-[20px] shadow-lg shadow-[#00000020] bg-white flex flex-col relative overflow-hidden"
                   key={index}
                 >
-                  <div className="w-[100%]  h-[150px] overflow-hidden bg-gray">
+                  <div className="w-[100%] rounded-[8px] h-[150px] overflow-hidden bg-gray">
                     <img
                       src={doctor?.image}
                       alt={doctor?.name}
                       className="w-[100%]"
                     />
                   </div>
-                  <div className="flex flex-col gap-4 items-center justify-center p-8">
-                    <h3 className="text-center text-[18px] ">
+                  <div className="mt-5 flex flex-col gap-1">
+                    <h3 className="text-[16px] ">
                       {"Dr. " + doctor?.firstName + " " + doctor?.lastName}
                     </h3>
-                    <p className="text-center ">{doctor?.speciality}</p>
-                    <p className="text-center ">{doctor?.address}</p>
-                    <PrimaryButton
-                      title="View Profile"
-                      onClick={() => Navigate(doctor?.id)}
-                    />
+                    <p className="">{doctor?.speciality}</p>
+                    <div className="mt-5 flex gap-2">
+                      <button
+                        className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
+                        onClick={() => Navigate(doctor?.id)}
+                      >
+                        View
+                      </button>
+                      <button
+                        className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
+                        onClick={() => handleEditModal(doctor)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
+                        onClick={() => handleDeleteModal(doctor)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -159,6 +174,16 @@ const DoctorsPage = () => {
           isEdit={isEdit}
           data={selectedDoctor}
           getData={fetchDoctors}
+        />
+      )}
+      {deleteModal && (
+        <DeleteModal
+          showModal={deleteModal}
+          closeModal={setDeleteModal}
+          data={selectedDoctor}
+          getData={fetchDoctors}
+          docKey="doctors"
+          message="Every data with this doctor will be erased and you won't have any access to them again"
         />
       )}
     </Layout>

@@ -34,9 +34,8 @@ export default function PatientsPageDetails() {
     try {
       const docSnap = await getDoc(doc(db, "patients", `${id}`));
       if (docSnap.exists()) {
-        setData(docSnap.data());
+        setData({ ...docSnap.data(), id: docSnap.id });
         setStatus(DATAMODE);
-        console.log("Document data:", docSnap.data());
       } else {
         setStatus(NULLMODE);
         setMessage(
@@ -104,17 +103,16 @@ export default function PatientsPageDetails() {
                   position: "absolute",
                 }}
               />
-              <div className="py-8 pl-8 pr-4 border-b flex items-center justify-between">
+              <div className="py-8 pr-4 border-b flex items-center justify-between">
                 <div className="flex items-center">
                   <p className="text-[24px] font-[600]">
                     {data?.firstName + " " + data?.lastName}
                   </p>
                   <div
                     onClick={() => {
-                      navigator.clipboard.writeText(
-                        data?.firstName + " " + data?.lastName
-                      );
+                      navigator.clipboard.writeText(data?.id);
                       setCopied(true);
+                      toast.success("Copied");
                       setTimeout(() => {
                         setCopied(false);
                       }, 3000);

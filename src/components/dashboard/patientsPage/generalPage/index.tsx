@@ -27,9 +27,9 @@ const PatientsPage = () => {
   const [patientModal, setPatientModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
+  const [deleteModal, setDeleteModal] = useState(false);
   const [patientData, setPatientData] = useState<any>([]);
   const [message, setMessage] = useState("");
-  const [deleteModal, setDeleteModal] = useState(false);
 
   const Navigate =useNavigate()
 

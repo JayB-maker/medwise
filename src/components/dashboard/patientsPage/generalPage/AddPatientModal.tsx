@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ModalContainer } from "../../../ui/modal/ModalContainer";
-import CloseIcon from "../../../..//assets/close-icon.svg";
+import CloseIcon from "../../../../assets/close-icon.svg";
+import ProfileIcon from "../../../../assets/profile-picture.svg";
 import CustomInputField from "../../../ui/customHTMLElements/CustomInputField";
 import { useForm } from "react-hook-form";
 import CustomSelect from "../../../ui/customHTMLElements/CustomSelect";
@@ -130,6 +131,9 @@ const AddPatientModal = ({
 
   const handleUpdate = async (request: any) => {
     setStatus(LOADING);
+    request.image === ""
+      ? (request.image = data.image)
+      : (request.image = request.image);
     try {
       const docRef = doc(db, "patients", data?.id);
 
@@ -244,7 +248,9 @@ const AddPatientModal = ({
                           ? (window.URL ? URL : webkitURL).createObjectURL(
                               imageURL[0]
                             )
-                          : "https://res.cloudinary.com/dm19qay3n/image/upload/v1685703775/internal-dashboard/profilePicture_idhxy1.svg"
+                          : isEdit && data.image !== ""
+                          ? data.image
+                          : ProfileIcon
                       }
                       alt=""
                       className="w-full"
