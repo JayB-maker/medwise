@@ -89,7 +89,7 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
             </p>
           </div>
 
-          <div className="pt-8 px-10 overflow-x-auto overflow-y-hidden w-full">
+          <div className="pt-4 px-10 overflow-x-auto overflow-y-hidden w-full">
             <div className="flex items-center bg-[#F4F7F9] w-[150%] gap-x-4 overflow-x-auto md:overflow-x-hidden md:gap-x-0 md:w-full px-4 h-[52px] text-incoverGray text-sm border-b rounded-t-[8px]">
               <p className="w-[10%]">S/N</p>
               <p className="w-[35%]">Diagnose</p>
@@ -200,7 +200,7 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
                 htmlFor="helper-checkbox"
                 className="font-medium text-black cursor-pointer"
               >
-                Are you Cured?
+                Cured?
               </label>
             </div>
           </div>

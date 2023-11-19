@@ -4,6 +4,7 @@ import ShieldIcon from "../../../../assets/shield-icon.svg";
 import DownloadIcon from "../../../../assets/download-icon.svg";
 import MoreIcon from "../../../../assets/more-icon.svg";
 import DetailsIcon from "../../../../assets/view-details-icon.svg";
+import UpdateIcon from "../../../../assets/submitted.svg";
 import { Tooltip } from "react-tooltip";
 import Layout from "../../../ui/layout";
 import { OtherButton } from "../../../ui/Button copy/Button";
@@ -17,6 +18,7 @@ import { getErrorMessage } from "../../../../utils/helpers";
 import CardLoader from "../../../ui/cardLoader";
 import ErrorView from "../../../ui/ErrorView";
 import EmptyView from "../../../ui/emptyView";
+import UpdateRecordModal from "./UpdateRecordModal";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -25,6 +27,7 @@ export default function PatientsPageDetails() {
   const [data, setData] = useState<any>();
   const [status, setStatus] = useState(IDLE);
   const [message, setMessage] = useState("");
+  const [updateRecord, setUpdateRecord] = useState(false);
 
   const { id } = useParams();
 
@@ -131,6 +134,14 @@ export default function PatientsPageDetails() {
                     {data?.role || "null"}
                   </p>
                   {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
+                </div>
+                <div className="flex gap-[12px]">
+                  <OtherButton
+                    title="Update Patient Record"
+                    beforeIcon={UpdateIcon}
+                      onClick={() => setUpdateRecord(true)}
+                    className="px-[12px] py-[8px] text-[16px] text-white bg-incoverGreen hover:bg-incoverDimGreen leading-5 font-normal rounded-md"
+                  />
                 </div>
               </div>
               <div className="w-full flex-1 flex md:flex-row flex-col">
@@ -378,8 +389,19 @@ export default function PatientsPageDetails() {
   };
 
   return (
-    <Layout pageTitle="Patient" pageSubTitle="view details">
-      {renderBasedOnStatus()}
-    </Layout>
+    <>
+      <Layout pageTitle="Patient" pageSubTitle="view details">
+        {renderBasedOnStatus()}
+      </Layout>
+      {updateRecord && (
+        <UpdateRecordModal
+          showModal={updateRecord}
+          closeModal={setUpdateRecord}
+          //   isEdit={isEdit}
+          data={data}
+          getData={fetchPatient}
+        />
+      )}
+    </>
   );
 }
