@@ -4,7 +4,7 @@ import CustomInputField from "../../../ui/customHTMLElements/CustomInputField";
 import MoreIcon from "../../../../assets/more-icon.svg";
 import DetailsIcon from "../../../../assets/view-details-icon.svg";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IPatientSectionProps {
   setDetails?: any;
@@ -17,12 +17,19 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
   const { recordList, setRecordList } = props;
   const [isEdit, setIsEdit] = useState(false);
 
   const [selectedRecord, setSelectedRecord] = useState<any>();
+
+  useEffect(() => {
+    // const { isCured } = selectedRecord;
+
+    setValue("isCured", selectedRecord?.isCured);
+  }, [isEdit, selectedRecord]);
 
   const onSubmit = (data: any) => {
     isEdit
@@ -32,8 +39,11 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
         data.prescription === ""
           ? (data.prescription = selectedRecord.prescription)
           : data.prescription,
-        (data.isCured = data.isCured),
+        data.isCured === ""
+          ? (data.isCured = selectedRecord.isCured)
+          : (data.isCured = data.isCured),
         (data.recordId = selectedRecord.recordId),
+        console.log(data),
         handleUpdateDetail(data),
         setIsEdit(false),
         reset())
@@ -48,8 +58,6 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
     setIsEdit(true);
     setSelectedRecord(item);
   };
-
-  console.log(selectedRecord)
 
   const handleUpdateDetail = (updatedDetail: any) => {
     setRecordList((prevArray: any) =>
@@ -190,7 +198,7 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
                 // value={isCured}
                 {...register("isCured")}
                 // value={isEdit ? selectedRecord?.isCured : ""}
-                defaultChecked={isEdit ? selectedRecord?.isCured : ""}
+                // defaultChecked={isEdit ? selectedRecord?.isCured : ""}
                 // checked = {isCured ? true : false}
                 className="w-4 h-4 accent-incoverGreen text-incoverGreen bg-gray-100 border-solid border-gray-300 rounded focus:ring-incoverGreen dark:focus:ring-incoverGreen dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
@@ -204,32 +212,6 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
               </label>
             </div>
           </div>
-
-          {/* <p className="text-[14px] text-incoverGray font-[600] leading-[24px]">
-            Are you cured of this?
-          </p>
-          <div className="flex gap-[16px] items-center">
-            <div
-              onClick={() => setIsCured(true)}
-              className={`cursor-pointer border-solid border-incoverGreen hover:border-[#004822] disabled:text-[#C8CCD0] disabled:border-[#C8CCD0] border-[1px] px-[16px] py-[4px] text-[14px] font-[500] rounded-lg focus:outline-none ${
-                isCured
-                  ? "bg-incoverGreen text-white"
-                  : "text-incoverGreen bg-white"
-              }`}
-            >
-              Yes
-            </div>
-            <div
-              onClick={() => setIsCured(false)}
-              className={`cursor-pointer border-solid border-incoverGreen hover:border-[#004822] disabled:text-[#C8CCD0] disabled:border-[#C8CCD0] border-[1px] px-[16px] py-[4px] text-[14px] font-[500] rounded-lg focus:outline-none ${
-                isCured === false
-                  ? "bg-incoverGreen text-white"
-                  : "text-incoverGreen bg-white"
-              }`}
-            >
-              No
-            </div>
-          </div> */}
         </div>
 
         <div className="flex justify-between">

@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import CopyIcon from "../../../../assets/copy-icon.svg";
 import ShieldIcon from "../../../../assets/shield-icon.svg";
 import DownloadIcon from "../../../../assets/download-icon.svg";
-import MoreIcon from "../../../../assets/more-icon.svg";
-import DetailsIcon from "../../../../assets/view-details-icon.svg";
 import UpdateIcon from "../../../../assets/submitted.svg";
 import { Tooltip } from "react-tooltip";
 import Layout from "../../../ui/layout";
 import { OtherButton } from "../../../ui/Button copy/Button";
-import { Popover } from "@headlessui/react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
@@ -139,7 +136,7 @@ export default function PatientsPageDetails() {
                   <OtherButton
                     title="Update Patient Record"
                     beforeIcon={UpdateIcon}
-                      onClick={() => setUpdateRecord(true)}
+                    onClick={() => setUpdateRecord(true)}
                     className="px-[12px] py-[8px] text-[16px] text-white bg-incoverGreen hover:bg-incoverDimGreen leading-5 font-normal rounded-md"
                   />
                 </div>
@@ -334,43 +331,6 @@ export default function PatientsPageDetails() {
                               <p className="w-[15%]">
                                 {record?.isCured ? "Yes" : "No"}
                               </p>
-
-                              <Popover className="w-[5%]">
-                                <>
-                                  <Popover.Button
-                                    className={`group inline-flex items-center rounded-md text-base font-normal text-[#4D5154] hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-transparent`}
-                                  >
-                                    <img src={MoreIcon} alt="" />
-                                  </Popover.Button>
-
-                                  <Popover.Panel className="absolute right-[32px] z-50  w-screen md:w-[130px] px-4 sm:px-2">
-                                    <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                      <div className="items-center grid gap-4 bg-white px-5 py-4">
-                                        <div
-                                          className="flex items-center"
-                                          //   onClick={() => handleEdit(record)}
-                                        >
-                                          <img src={DetailsIcon} alt="" />
-                                          <p className="pl-2 text-[16px]">
-                                            Edit
-                                          </p>
-                                        </div>
-                                        <div
-                                          //   onClick={() =>
-                                          //     handleRemoveDetail(record?.recordId)
-                                          //   }
-                                          className="flex items-center"
-                                        >
-                                          <img src={DetailsIcon} alt="" />
-                                          <p className="pl-2 text-[#B00020]">
-                                            Delete
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </Popover.Panel>
-                                </>
-                              </Popover>
                             </div>
                           );
                         })}

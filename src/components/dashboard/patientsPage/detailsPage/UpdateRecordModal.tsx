@@ -29,8 +29,6 @@ const UpdateRecordModal = ({
   const handleUpdate = async () => {
     setStatus(LOADING);
     const request = { ...data, patientRecord: recordList };
-    console.log(request);
-
     try {
       const docRef = doc(db, "patients", data?.id);
 
