@@ -13,6 +13,7 @@ import EmptyView from "../../../ui/emptyView";
 import ErrorView from "../../../ui/ErrorView";
 import CardLoader from "../../../ui/cardLoader";
 import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
+import { LOCAL_STORAGE_KEYS } from "../../../../helpers/localStorageKeys";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -27,21 +28,31 @@ const DoctorsPage = () => {
 
   const Navigate = useNavigate();
 
+  const [userRole, setUserRole] = useState();
+
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
+
   const fetchDoctors = async () => {
     setStatus(LOADING);
-    const doctor: any = [];
+    const worker: any = [];
     try {
-      const querySnapshot = await getDocs(collection(db, "doctors"));
+      const querySnapshot = await getDocs(collection(db, "workers"));
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          doctor.push({ id: doc.id, ...doc.data() });
+          worker.push({ id: doc.id, ...doc.data() });
         });
-        doctor.length > 0 ? setStatus(DATAMODE) : setStatus(NULLMODE);
-        setDoctorData(doctor);
+        worker.length > 0 ? setStatus(DATAMODE) : setStatus(NULLMODE);
+        setDoctorData(worker);
       } else {
         setStatus(NULLMODE);
         setMessage(
-          "No doctor data available, check your internet and try again"
+          "No worker data available, check your internet and try again"
         );
       }
     } catch (error: any) {
@@ -60,10 +71,10 @@ const DoctorsPage = () => {
     fetchDoctors();
   }, []);
 
-  const handleDeleteModal = (data: any) => {
-    setDeleteModal(true);
-    setSelectedDoctor(data);
-  };
+  // const handleDeleteModal = (data: any) => {
+  //   setDeleteModal(true);
+  //   setSelectedDoctor(data);
+  // };
 
   const handleEditModal = (data: any) => {
     setDoctorModal(true);
@@ -102,42 +113,42 @@ const DoctorsPage = () => {
         return (
           <>
             <div className="grid grid-cols-4 gap-10">
-              {doctorData?.map((doctor: any, index: any) => (
+              {doctorData?.map((worker: any, index: any) => (
                 <div
                   className="rounded-[8px] p-[20px] shadow-lg shadow-[#00000020] bg-white flex flex-col relative overflow-hidden"
                   key={index}
                 >
                   <div className="w-[100%] rounded-[8px] h-[150px] overflow-hidden bg-gray">
                     <img
-                      src={doctor?.image}
-                      alt={doctor?.name}
+                      src={worker?.image}
+                      alt={worker?.name}
                       className="w-[100%]"
                     />
                   </div>
                   <div className="mt-5 flex flex-col gap-1">
                     <h3 className="text-[16px] ">
-                      {"Dr. " + doctor?.firstName + " " + doctor?.lastName}
+                      {worker?.firstName + " " + worker?.lastName}
                     </h3>
-                    <p className="">{doctor?.speciality}</p>
+                    <p className="">Role: {worker?.role}</p>
                     <div className="mt-5 flex gap-2">
                       <button
                         className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
-                        onClick={() => Navigate(doctor?.id)}
+                        onClick={() => Navigate(worker?.id)}
                       >
                         View
                       </button>
                       <button
                         className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
-                        onClick={() => handleEditModal(doctor)}
+                        onClick={() => handleEditModal(worker)}
                       >
                         Edit
                       </button>
-                      <button
+                      {/* <button
                         className="flex-1 border-solid border-[0.5px] border-[#000000] p-1 rounded-2xl text-[12px] hover:bg-incoverGreen hover:text-white"
-                        onClick={() => handleDeleteModal(doctor)}
+                        onClick={() => handleDeleteModal(worker)}
                       >
                         Delete
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -155,16 +166,18 @@ const DoctorsPage = () => {
     <Layout>
       <div className="flex justify-between">
         <PageHeading
-          title="Doctors"
-          subTitle="View and manage all your doctors from here"
+          title="Hospital Workers"
+          subTitle="View and manage all your hospital workers from here"
         />
-        <PrimaryButton
-          title="Add Doctor"
-          className="h-fit"
-          onClick={() => {
-            setDoctorModal(true);
-          }}
-        />
+        {userRole === "ADMIN" && (
+          <PrimaryButton
+            title="Add Doctor"
+            className="h-fit"
+            onClick={() => {
+              setDoctorModal(true);
+            }}
+          />
+        )}
       </div>
       {renderBasedOnStatus()}
       {doctorModal && (
@@ -182,8 +195,8 @@ const DoctorsPage = () => {
           closeModal={setDeleteModal}
           data={selectedDoctor}
           getData={fetchDoctors}
-          docKey="doctors"
-          message="Every data with this doctor will be erased and you won't have any access to them again"
+          docKey="workers"
+          message="Every data with this worker will be erased and you won't have any access to them again"
         />
       )}
     </Layout>

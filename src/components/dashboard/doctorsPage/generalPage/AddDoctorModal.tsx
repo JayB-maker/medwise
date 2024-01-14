@@ -50,7 +50,7 @@ const AddDoctorModal = ({
   useEffect(() => {
     if (file !== undefined) {
       const fileName = new Date().getTime() + file[0]?.name;
-      const storageRef = ref(storage, `doctorsImage/${fileName}`);
+      const storageRef = ref(storage, `workersImage/${fileName}`);
       const uploadTask = uploadBytesResumable(storageRef, file[0]);
 
       setImageUploadStatus(true);
@@ -107,11 +107,11 @@ const AddDoctorModal = ({
       const res = await createUserWithEmailAndPassword(
         auth,
         data.email,
-        "MedwiseDoctor"
+        "MedwiseWorker"
       );
-      await setDoc(doc(db, "doctors", res.user.uid), {
+      await setDoc(doc(db, "workers", res.user.uid), {
         ...data,
-        role: "DOCTOR",
+        uid: auth.currentUser?.uid,
         createdAt: serverTimestamp(),
       })
         .then(() => {
@@ -138,7 +138,7 @@ const AddDoctorModal = ({
 
     console.log(request);
     try {
-      const docRef = doc(db, "doctors", data?.id);
+      const docRef = doc(db, "workers", data?.id);
 
       await updateDoc(docRef, {
         ...request,
@@ -288,6 +288,19 @@ const AddDoctorModal = ({
                   control={control}
                   name="gender"
                   defaultValue={isEdit ? data?.gender : ""}
+                  handleChange={(e, a) => handleChange(e, a)}
+                />
+                <CustomSelect
+                  placeholder="Role"
+                  options={[
+                    { label: "Admin", value: "ADMIN" },
+                    { label: "Doctor", value: "DOCTOR" },
+                    { label: "Nurse", value: "NURSE" },
+                    { label: "Lab Technician", value: "LAB_TECHNICIAN" },
+                  ]}
+                  control={control}
+                  name="role"
+                  defaultValue={isEdit ? data?.role : ""}
                   handleChange={(e, a) => handleChange(e, a)}
                 />
               </div>

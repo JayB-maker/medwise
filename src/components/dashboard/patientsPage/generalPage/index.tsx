@@ -17,6 +17,7 @@ import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";
 import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
 import { useNavigate } from "react-router";
+import { LOCAL_STORAGE_KEYS } from "../../../../helpers/localStorageKeys";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -30,8 +31,18 @@ const PatientsPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [patientData, setPatientData] = useState<any>([]);
   const [message, setMessage] = useState("");
+  const Navigate = useNavigate();
+  const [userRole, setUserRole] = useState();
+  const [userId, setUserId] = useState();
 
-  const Navigate =useNavigate()
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserId(parsedUserDetails?.id);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
 
   const fetchPatients = async () => {
     setStatus(LOADING);
@@ -63,8 +74,10 @@ const PatientsPage = () => {
   };
 
   useEffect(() => {
-    fetchPatients();
-  }, []);
+    if (userRole !== "") {
+      fetchPatients();
+    }
+  }, [userRole]);
 
   const handleEditModal = (data: any) => {
     setPatientModal(true);
@@ -72,10 +85,10 @@ const PatientsPage = () => {
     setSelectedPatient(data);
   };
 
-  const handleDeleteModal = (data: any) => {
-    setDeleteModal(true);
-    setSelectedPatient(data);
-  };
+  // const handleDeleteModal = (data: any) => {
+  //   setDeleteModal(true);
+  //   setSelectedPatient(data);
+  // };
 
   const refresh = () => {
     window.location.reload();
@@ -120,8 +133,86 @@ const PatientsPage = () => {
                 <p className="w-[5%] text-right"> </p>
               </div>
 
-              {patientData?.map((plan: any, index: any) => {
-                return (
+              {patientData?.map((plan: any, index: any) =>
+                userRole === "PATIENT" ? (
+                  userId === plan.id && (
+                    <div
+                      key={index}
+                      className="flex items-center bg-white w-[100%] gap-x-4  md:gap-x-0 md:w-full p-4 text-[#5B5B5B] text-sm font-light border-0 border-b border-solid border-[#E4E7EB] cursor-pointer last:rounded-b-[8px]"
+                    >
+                      <div className="relative w-[40px] mr-[25px] rounded-[50%] overflow-hidden ">
+                        <div className="w-[40px] h-[40px] relative overflow-hidden">
+                          <img
+                            src={
+                              plan?.image
+                                ? plan?.image
+                                : "https://res.cloudinary.com/dm19qay3n/image/upload/v1685703775/internal-dashboard/profilePicture_idhxy1.svg"
+                            }
+                            alt={plan?.name}
+                            className="absolute top-0"
+                          />
+                        </div>
+                      </div>
+                      <p className="w-[15%]">
+                        {" "}
+                        {plan?.firstName + " " + plan?.lastName}
+                      </p>
+                      <p className="w-[10%]">
+                        {plan?.id?.slice(0, 10) + "..."}
+                      </p>
+                      <p className="w-[20%]">{plan?.email}</p>
+                      <p className="w-[15%]">
+                        {plan?.address?.length > 20
+                          ? plan?.address?.slice(0, 20) + "..."
+                          : plan?.address}
+                      </p>
+                      <p className="w-[10%]">{plan?.phoneNumber}</p>
+                      <p className="w-[10%]">{plan?.gender}</p>
+                      <p className="w-[10%]">
+                        {plan?.updatedAt?.legth > 0
+                          ? firebaseDateHandler(plan?.updatedAt)
+                          : firebaseDateHandler(plan?.createdAt)}
+                      </p>
+                      <Popover className="w-[5%] text-right">
+                        <>
+                          <Popover.Button
+                            className={`group inline-flex items-center rounded-md text-base font-normal text-[#4D5154] hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-transparent`}
+                          >
+                            <img src={MoreIcon} alt="" />
+                          </Popover.Button>
+
+                          <Popover.Panel className="absolute right-0 z-50  w-screen md:w-[200px] px-4 sm:px-2">
+                            <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                              <div className="items-center grid gap-4 bg-white px-5 py-4">
+                                <div
+                                  onClick={() => Navigate(plan?.id)}
+                                  className="flex items-center"
+                                >
+                                  <img src={DetailsIcon} alt="" />
+                                  <p className="pl-2">View</p>
+                                </div>
+                                <div
+                                  onClick={() => handleEditModal(plan)}
+                                  className="flex items-center"
+                                >
+                                  <img src={DetailsIcon} alt="" />
+                                  <p className="pl-2">Edit</p>
+                                </div>
+                                {/* <div
+                                onClick={() => handleDeleteModal(plan)}
+                                className="flex items-center"
+                              >
+                                <img src={DetailsIcon} alt="" />
+                                <p className="pl-2">Delete</p>
+                              </div> */}
+                              </div>
+                            </div>
+                          </Popover.Panel>
+                        </>
+                      </Popover>
+                    </div>
+                  )
+                ) : (
                   <div
                     key={index}
                     className="flex items-center bg-white w-[100%] gap-x-4  md:gap-x-0 md:w-full p-4 text-[#5B5B5B] text-sm font-light border-0 border-b border-solid border-[#E4E7EB] cursor-pointer last:rounded-b-[8px]"
@@ -182,21 +273,21 @@ const PatientsPage = () => {
                                 <img src={DetailsIcon} alt="" />
                                 <p className="pl-2">Edit</p>
                               </div>
-                              <div
+                              {/* <div
                                 onClick={() => handleDeleteModal(plan)}
                                 className="flex items-center"
                               >
                                 <img src={DetailsIcon} alt="" />
                                 <p className="pl-2">Delete</p>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </Popover.Panel>
                       </>
                     </Popover>
                   </div>
-                );
-              })}
+                )
+              )}
             </div>
             {patientData?.length > 0 && (
               <Pagination
@@ -222,14 +313,18 @@ const PatientsPage = () => {
           title="Patients"
           subTitle="View and manage all your patients from here"
         />
-        <PrimaryButton
-          title="Add Patient"
-          className="h-fit"
-          onClick={() => {
-            setIsEdit(false);
-            setPatientModal(true);
-          }}
-        />
+        {(userRole === "ADMIN" ||
+          userRole === "DOCTOR" ||
+          userRole === "NURSE") && (
+          <PrimaryButton
+            title="Add Patient"
+            className="h-fit"
+            onClick={() => {
+              setIsEdit(false);
+              setPatientModal(true);
+            }}
+          />
+        )}
       </div>
       {renderBasedOnStatus()}
       {patientModal && (

@@ -7,7 +7,7 @@ import { Tooltip } from "react-tooltip";
 import Layout from "../../../ui/layout";
 import { OtherButton } from "../../../ui/Button copy/Button";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../../firebase";
+import { auth, db } from "../../../../firebase";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ import CardLoader from "../../../ui/cardLoader";
 import ErrorView from "../../../ui/ErrorView";
 import EmptyView from "../../../ui/emptyView";
 import UpdateRecordModal from "./UpdateRecordModal";
+import LabRecordModal from "./LabRecordModal";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -25,6 +26,7 @@ export default function PatientsPageDetails() {
   const [status, setStatus] = useState(IDLE);
   const [message, setMessage] = useState("");
   const [updateRecord, setUpdateRecord] = useState(false);
+  const [labRecord, setLabRecord] = useState(false);
 
   const { id } = useParams();
 
@@ -53,6 +55,8 @@ export default function PatientsPageDetails() {
       }
     }
   };
+
+  console.log(auth.currentUser, 'user')
 
   useEffect(() => {
     if (id) {
@@ -112,7 +116,7 @@ export default function PatientsPageDetails() {
                     onClick={() => {
                       navigator.clipboard.writeText(data?.id);
                       setCopied(true);
-                      toast.success("Copied");
+                      toast.success("Copied patient Id");
                       setTimeout(() => {
                         setCopied(false);
                       }, 3000);
@@ -176,6 +180,42 @@ export default function PatientsPageDetails() {
                     <div className="flex items-center mt-5">
                       <div className="flex flex-1 flex-col">
                         <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
+                          Height
+                        </p>
+                        <p className="text-[16px] leading-6 font-medium pt-1">
+                          {data?.height && data?.height + "cm" || "N/A"}
+                        </p>
+                      </div>
+                      <div className="flex flex-1 flex-col">
+                        <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
+                          Weight
+                        </p>
+                        <p className="text-[16px] leading-6 font-medium pt-1">
+                          {data?.weight && data?.weight + "kg" || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center mt-5">
+                      <div className="flex flex-1 flex-col">
+                        <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
+                          Emergency Contact
+                        </p>
+                        <p className="text-[16px] leading-6 font-medium pt-1">
+                          {data?.emergencyContact || "N/A"}
+                        </p>
+                      </div>
+                      <div className="flex flex-1 flex-col">
+                        <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
+                          Blood Type
+                        </p>
+                        <p className="text-[16px] leading-6 font-medium pt-1">
+                          {data?.bloodType || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center mt-5">
+                      <div className="flex flex-1 flex-col">
+                        <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
                           Medication
                         </p>
                         <p className="text-[16px] leading-6 font-medium pt-1">
@@ -208,6 +248,16 @@ export default function PatientsPageDetails() {
                         </p>
                         <p className="text-[16px] leading-6 font-medium pt-1">
                           {data?.phoneNumber || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex mt-5">
+                      <div className="flex flex-col">
+                        <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
+                          Primary Language
+                        </p>
+                        <p className="text-[16px] leading-6 font-medium pt-1">
+                          {data?.primaryLanguage || "N/A"}
                         </p>
                       </div>
                     </div>
@@ -298,16 +348,16 @@ export default function PatientsPageDetails() {
                   <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3 mt-8 overflow-hidden">
                     <div className="flex justify-between pb-3 px-6">
                       <p className="text-[18px] leading-6 font-medium">
-                        Patient Record
+                        Patient Records
                       </p>
-                      <div className="flex gap-[12px]">
+                      {/* <div className="flex gap-[12px]">
                         <OtherButton
                           title="Download Patient Record"
                           beforeIcon={DownloadIcon}
                           //   onClick={() => setViewVehicleModal(true)}
                           className="px-[12px] py-[4px] text-[16px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <div className="flex flex-col rounded-b-[12px]">
                       <div className="overflow-x-auto overflow-y-hidden w-full">
@@ -337,6 +387,59 @@ export default function PatientsPageDetails() {
                       </div>
                     </div>
                   </div>
+
+                  <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3 mt-8 overflow-hidden">
+                    <div className="flex justify-between pb-3 px-6">
+                      <p className="text-[18px] leading-6 font-medium">
+                        Lab Records
+                      </p>
+                      <div className="flex gap-[12px]">
+                        <OtherButton
+                          title="Request Lab Record"
+                          beforeIcon={DownloadIcon}
+                          onClick={() => setLabRecord(true)}
+                          className="px-[12px] py-[4px] text-[16px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
+                        />
+                      </div>
+                    </div>
+                    {data?.patientLabRecord?.length > 0 && <div className="flex flex-col rounded-b-[12px]">
+                      <div className="overflow-x-auto overflow-y-hidden w-full">
+                        <div className="flex items-center bg-[#F4F7F9] w-[100%] gap-x-4 overflow-x-auto md:overflow-x-hidden md:gap-x-0  px-4 h-[52px] text-incoverGray text-sm ">
+                          <p className="w-[10%]">S/N</p>
+                          <p className="w-[30%]">Lab Test For</p>
+                          <p className="w-[30%]">lab</p>
+                          <p className="w-[15%}">Done?</p>
+                          <p className="w-[15%]"> </p>
+                        </div>
+
+                        {data?.patientLabRecord?.map(
+                          (record: any, index: any) => {
+                            return (
+                              <div
+                                key={index}
+                                className="flex items-center bg-white w-[100%] gap-x-4  md:gap-x-0 md:w-full p-4 text-[#5B5B5B] text-sm font-light border-b cursor-pointer last:rounded-b-[8px]"
+                              >
+                                <p className="w-[10%]"> {index + 1}</p>
+                                <p className="w-[30%]">{record?.labTestFor}</p>
+                                <p className="w-[30%]">{record?.lab}</p>
+                                <p className="w-[15%]">
+                                  {record?.labResult?.length > 0 ? "Yes" : "No"}
+                                </p>
+                                {record?.labResult?.length > 0 && (
+                                  <OtherButton
+                                    title="View Result"
+                                    beforeIcon={DownloadIcon}
+                                    onClick={() => window.open(record?.labResult)}
+                                    className="w-[fit] px-[12px] py-[4px] text-[12px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
+                                  />
+                                )}
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    </div>}
+                  </div>
                 </div>
               </div>
             </div>
@@ -357,6 +460,15 @@ export default function PatientsPageDetails() {
         <UpdateRecordModal
           showModal={updateRecord}
           closeModal={setUpdateRecord}
+          //   isEdit={isEdit}
+          data={data}
+          getData={fetchPatient}
+        />
+      )}
+      {labRecord && (
+        <LabRecordModal
+          showModal={labRecord}
+          closeModal={setLabRecord}
           //   isEdit={isEdit}
           data={data}
           getData={fetchPatient}

@@ -12,7 +12,7 @@ const ErrorView = (props: Props) => {
   const { iconClass, messageClass, message, handleRetry, heading } = props;
   return (
     <>
-      <div className="error-view">
+      <div className="error-view flex flex-col items-center">
         <img
           src="https://res.cloudinary.com/dm19qay3n/image/upload/v1680164221/internal-dashboard/Pngtree_red_error_icon_5418881_vfbr74.png"
           className={`error-view__icon ${iconClass}`}

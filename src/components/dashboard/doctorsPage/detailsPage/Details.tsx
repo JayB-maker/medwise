@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CopyIcon from "../../../../assets/copy-icon.svg";
 import Layout from "../../../ui/layout";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
@@ -9,10 +10,12 @@ import { getErrorMessage } from "../../../../utils/helpers";
 import CardLoader from "../../../ui/cardLoader";
 import ErrorView from "../../../ui/ErrorView";
 import EmptyView from "../../../ui/emptyView";
+import { Tooltip } from "react-tooltip";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
 export default function DoctorsPageDetails() {
+  const [copied, setCopied] = useState(false);
   const [data, setData] = useState<any>();
   const [status, setStatus] = useState(IDLE);
   const [message, setMessage] = useState("");
@@ -23,7 +26,7 @@ export default function DoctorsPageDetails() {
     setStatus(LOADING);
     // const patient: any = [];
     try {
-      const docSnap = await getDoc(doc(db, "doctors", `${id}`));
+      const docSnap = await getDoc(doc(db, "workers", `${id}`));
       if (docSnap.exists()) {
         setData({ ...docSnap.data(), id: docSnap.id });
         setStatus(DATAMODE);
@@ -82,6 +85,48 @@ export default function DoctorsPageDetails() {
         return (
           <>
             <div className="flex-1 relative">
+              <Tooltip
+                id="copy-tooltip"
+                float={true}
+                openOnClick={true}
+                isOpen={copied ? true : false}
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  padding: "10px",
+                  position: "absolute",
+                }}
+              />
+              <div className="py-8 pr-4 pl-4 border-b flex items-center justify-between">
+                <div className="flex items-center">
+                  <p className="text-[24px] font-[600]">
+                    {data?.firstName + " " + data?.lastName}
+                  </p>
+                  <div
+                    onClick={() => {
+                      navigator.clipboard.writeText(data?.id);
+                      setCopied(true);
+                      toast.success("Copied Doctor Id");
+                      setTimeout(() => {
+                        setCopied(false);
+                      }, 3000);
+                    }}
+                    data-tooltip-id="copy-tooltip"
+                    data-tooltip-place="top"
+                    data-tooltip-content="Copied!"
+                  >
+                    <img
+                      src={CopyIcon}
+                      alt=""
+                      className="pl-3 cursor-pointer"
+                    />
+                  </div>
+                  <p className="px-4 ml-3 py-2 rounded-[32px] bg-[#8A6F4430] text-[#8A6F44] text-[14px] ">
+                    {data?.role || "null"}
+                  </p>
+                  {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
+                </div>
+              </div>
               <div className="w-full flex-1 flex md:flex-row flex-col">
                 <div className="flex-1 pr-6 pl-4">
                   <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3">
@@ -99,14 +144,6 @@ export default function DoctorsPageDetails() {
                     <div className="flex flex-col py-3 px-6 bg-[#F4F7F9] rounded-b-[12px]">
                       <div className="flex gap-[90px]">
                         <div className="flex flex-col gap-[12px] flex-1">
-                          <div className="flex  justify-between">
-                            <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
-                              First Name
-                            </p>
-                            <p className="text-[16px] leading-6 font-medium">
-                              {data?.firstName || "N/A"}
-                            </p>
-                          </div>
                           <div className="flex justify-between pt-3">
                             <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
                               Phone Number
@@ -134,14 +171,6 @@ export default function DoctorsPageDetails() {
                         </div>
 
                         <div className="flex flex-col gap-[12px] flex-1">
-                          <div className="flex  justify-between">
-                            <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
-                              Last Name
-                            </p>
-                            <p className="text-[16px] leading-6 font-medium">
-                              {data?.lastName || "N/A"}
-                            </p>
-                          </div>
                           <div className="flex justify-between pt-3">
                             <p className="text-[#6F7174] text-[16px] leading-6 font-normal">
                               Gender

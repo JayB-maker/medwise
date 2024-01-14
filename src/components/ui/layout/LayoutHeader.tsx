@@ -4,6 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import ImageAvatar from "../../../assets/avatar.png";
 import NextIcon from "../../../assets/arrow-right-icon.svg";
 import { useAuth } from "../../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
+import { auth } from "../../../firebase";
+
+
+export const fireBaseLogout = async () => {
+  await signOut(auth)
+    .then(() => {
+      // toast.success("logged out succesfully");
+    })
+    .catch((error) => {
+      toast.error(error.message);
+    });
+};
+
 
 const LayoutHeader = (props: ILayoutProps) => {
   const {
@@ -27,7 +42,12 @@ const LayoutHeader = (props: ILayoutProps) => {
 
   const { logout } = useAuth();
 
+  // const auth = getAuth();
+
+  
+
   const handleLogout = () => {
+    fireBaseLogout();
     logout();
     navigate("/login");
   };
@@ -36,19 +56,19 @@ const LayoutHeader = (props: ILayoutProps) => {
     <>
       <div className={`main-section ${isSidebarExpanded ? "" : "expanded"}`}>
         <div className={`header ${isSidebarExpanded ? "" : "expanded"}`}>
-        <div className="flex items-center">
-        <h1 className="text-[18px] leading-[28px] font-semibold text-[#4D5154] capitalize">
-          {pageTitle}
-        </h1>
-        {pageSubTitle && (
-          <>
-            <img src={NextIcon} alt="" />
-            <h1 className="text-[14px] leading-[20px] font-normal text-[#4D5154] capitalize">
-              {pageSubTitle}
+          <div className="flex items-center">
+            <h1 className="text-[18px] leading-[28px] font-semibold text-[#4D5154] capitalize">
+              {pageTitle}
             </h1>
-          </>
-        )}
-      </div>
+            {pageSubTitle && (
+              <>
+                <img src={NextIcon} alt="" />
+                <h1 className="text-[14px] leading-[20px] font-normal text-[#4D5154] capitalize">
+                  {pageSubTitle}
+                </h1>
+              </>
+            )}
+          </div>
           <div className="notification-wrapper">
             <div className="profile">
               <div

@@ -13,6 +13,7 @@ import EmptyView from "../../../ui/emptyView";
 import ErrorView from "../../../ui/ErrorView";
 import CardLoader from "../../../ui/cardLoader";
 import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
+import { LOCAL_STORAGE_KEYS } from "../../../../helpers/localStorageKeys";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -28,6 +29,15 @@ const DepartmentPage = () => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   // const Navigate = useNavigate();
+  const [userRole, setUserRole] = useState();
+
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
 
   const fetchDepartments = async () => {
     setStatus(LOADING);
@@ -152,13 +162,15 @@ const DepartmentPage = () => {
           title="Departments"
           subTitle="View and manage all your departments from here"
         />
-        <PrimaryButton
-          title="Add Department"
-          className="h-fit"
-          onClick={() => {
-            setDepartmentModal(true);
-          }}
-        />
+        {(userRole === "ADMIN" || userRole === "NURSE") && (
+          <PrimaryButton
+            title="Add Department"
+            className="h-fit"
+            onClick={() => {
+              setDepartmentModal(true);
+            }}
+          />
+        )}
       </div>
       {renderBasedOnStatus()}
       {departmentModal && (

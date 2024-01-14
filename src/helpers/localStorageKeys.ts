@@ -1,6 +1,7 @@
 export enum LOCAL_STORAGE_KEYS {
   TOKEN = "token",
   USER = "user",
+  USER_DETAILS = "userDetails",
   SUB_ACCOUNTS = "subaccounts",
   USER_BIO_DATA_ID = "userBiodataId",
   INSURED_USER_BIO_DATA_ID = "insuredUserBiodataId",

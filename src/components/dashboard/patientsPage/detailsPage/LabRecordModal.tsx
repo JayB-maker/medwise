@@ -4,14 +4,14 @@ import CloseIcon from "../../../../assets/close-icon.svg";
 import { OutlineButton, PrimaryButton } from "../../../ui/Button copy/Button";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
 import { db } from "../../../../firebase";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";
-import PatientRecordSection from "../generalPage/PatientRecordSection";
+import LabRecordSection from "./LabRecordSection";
 
 const { IDLE, LOADING, SUCCESS, ERROR } = dataQueryStatus;
 
-const UpdateRecordModal = ({
+const LabRecordModal = ({
   showModal,
   closeModal,
   data,
@@ -24,15 +24,17 @@ const UpdateRecordModal = ({
   getData?: any;
 }): JSX.Element => {
   const [status, setStatus] = useState(IDLE);
-  const [recordList, setRecordList] = useState<any>(data?.patientRecord);
+  const [labRecordList, setLabRecordList] = useState<any>(
+    data?.patientLabRecord || []
+  );
 
   const handleUpdate = async () => {
     setStatus(LOADING);
-    const request = { ...data, patientRecord: recordList };
+    const request = { ...data, patientLabRecord: labRecordList };
     try {
       const docRef = doc(db, "patients", data?.id);
 
-      await updateDoc(docRef, {
+      await (data?.patientRecord?.length > 0 ? updateDoc : setDoc)(docRef, {
         ...request,
         updatedAt: serverTimestamp(),
       });
@@ -55,7 +57,7 @@ const UpdateRecordModal = ({
         <div className="w-full top-0 left-0 px-[36px] py-4 border-0 border-b-[1px] border-solid border-incoverGrey sticky bg-white z-50">
           <div className="flex justify-between items-center">
             <h2 className="text-[24px] leading-[32px] font-[600]">
-              Update Record
+              Request for a Record
             </h2>
             <img
               src={CloseIcon}
@@ -69,9 +71,9 @@ const UpdateRecordModal = ({
         </div>
         <div className="w-full -mt-4">
           <div className="pt-4 flex flex-col">
-            <PatientRecordSection
-              recordList={recordList}
-              setRecordList={setRecordList}
+            <LabRecordSection
+              labRecordList={labRecordList}
+              setLabRecordList={setLabRecordList}
             />
             <div className="mt-[23px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
               <div className="flex justify-between">
@@ -99,4 +101,4 @@ const UpdateRecordModal = ({
   );
 };
 
-export default UpdateRecordModal;
+export default LabRecordModal;

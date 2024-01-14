@@ -110,6 +110,7 @@ const AddPatientModal = ({
       );
       await setDoc(doc(db, "patients", res.user.uid), {
         ...data,
+        uid: auth.currentUser?.uid,
         role: "PATIENT",
         createdAt: serverTimestamp(),
       })
@@ -166,6 +167,11 @@ const AddPatientModal = ({
         firstName,
         lastName,
         email,
+        height,
+        weight,
+        bloodType,
+        primaryLanguage,
+        emergencyContact,
         medication,
         allergies,
         nokFirstName,
@@ -184,6 +190,11 @@ const AddPatientModal = ({
       setValue("lastName", lastName);
       setValue("email", email);
       setValue("dateOfBirth", dateOfBirth);
+      setValue("height", height);
+      setValue("weight", weight);
+      setValue("bloodType", bloodType);
+      setValue("primaryLanguage", primaryLanguage);
+      setValue("emergencyContact", emergencyContact);
       setValue("medication", medication);
       setValue("allergies", allergies);
       setValue("nokFirstName", nokFirstName);
@@ -307,6 +318,36 @@ const AddPatientModal = ({
                     type="text"
                     label="Allergies"
                     {...register("allergies")}
+                    onChange={(e: any) => handleInputChange(e)}
+                  />
+                  <CustomInputField
+                    type="text"
+                    label="Emergency Contact"
+                    {...register("emergencyContact")}
+                    onChange={(e: any) => handleInputChange(e)}
+                  />
+                  <CustomInputField
+                    type="number"
+                    label="Height (cm)"
+                    {...register("height")}
+                    onChange={(e: any) => handleInputChange(e)}
+                  />
+                  <CustomInputField
+                    type="number"
+                    label="Weight (kg)"
+                    {...register("weight")}
+                    onChange={(e: any) => handleInputChange(e)}
+                  />
+                  <CustomInputField
+                    type="text"
+                    label="Blood Type"
+                    {...register("bloodType")}
+                    onChange={(e: any) => handleInputChange(e)}
+                  />
+                  <CustomInputField
+                    type="text"
+                    label="Primary Language"
+                    {...register("primaryLanguage")}
                     onChange={(e: any) => handleInputChange(e)}
                   />
                   <CustomSelect

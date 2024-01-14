@@ -96,6 +96,7 @@ const CustomSelect: FC<{
   control?: any;
   errors?: any;
   isMulti?: boolean;
+  required?: boolean;
   extraLabel?: string;
 }> = ({
   options,
@@ -107,6 +108,7 @@ const CustomSelect: FC<{
   control,
   errors,
   defaultValue,
+  required,
   inputValue,
   handleChange,
   isMulti = false,
@@ -148,6 +150,7 @@ const CustomSelect: FC<{
                 ValueContainer: CustomValueContainer,
               }}
               isMulti={isMulti}
+              required={required}
             />
           );
         }}
