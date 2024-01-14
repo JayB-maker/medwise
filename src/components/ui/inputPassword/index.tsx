@@ -49,7 +49,6 @@ const InputPassword = (props: InputTypes) => {
     register,
     required,
     pattern,
-    type,
     minLength,
     maxLength,
   } = props;

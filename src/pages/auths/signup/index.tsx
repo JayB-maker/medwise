@@ -1,13 +1,9 @@
 import { Button, Input, InputPassword } from "../../../components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
-import { Controller, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { dataQueryStatus } from "../../../utils/dataQueryStatus";
-import axios from "axios";
-import { apiQueryMethods, apiUrls } from "../../../utils/api";
 import Alert from "../../../components/ui/alert";
-import Select from "../../../components/ui/select";
 import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -18,12 +14,10 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    control,
   } = useForm();
 
   const [status, setStatus] = useState(IDLE);
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
 
   const navigate = useNavigate();
@@ -140,7 +134,7 @@ const Signup = () => {
         </p>
       </div>
       {alert && (
-        <Alert title={message} text="" timeOut={3000} alertOut={setAlert} />
+        <Alert title="{message}" text="" timeOut={3000} alertOut={setAlert} />
       )}
     </>
   );

@@ -20,7 +20,7 @@ const customStyles: StylesConfig = {
       borderColor: "#006B33", // Set your custom hover color
     },
   }),
-  input: (base: any, state: any) => ({
+  input: (base: any ) => ({
     ...base,
     fontSize: "14px",
     borderColor: "#006B33",
@@ -31,7 +31,7 @@ const customStyles: StylesConfig = {
     color: "#212529",
     borderColor: "#006B33",
   }),
-  valueContainer: (provided, state) => ({
+  valueContainer: (provided) => ({
     ...provided,
     overflow: "visible",
     borderColor: "#006B33",
@@ -50,7 +50,7 @@ const customStyles: StylesConfig = {
     color:
       state.hasValue || state.selectProps.inputValue ? "#006C33" : "#4D5154",
   }),
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  option: (styles, { isDisabled, isSelected }) => {
     return {
       ...styles,
       backgroundColor: isSelected ? "#006C33" : styles.backgroundColor,
@@ -109,7 +109,7 @@ const CustomSelect: FC<{
   errors,
   defaultValue,
   required,
-  inputValue,
+  // inputValue,
   handleChange,
   isMulti = false,
   extraLabel,
@@ -127,7 +127,7 @@ const CustomSelect: FC<{
         control={control}
         defaultValue={defaultValue}
         render={({ field }) => {
-          const { onChange, value, name } = field;
+          const { onChange, name } = field;
           return (
             <Select
               placeholder={placeholder}

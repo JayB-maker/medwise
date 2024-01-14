@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import "./AuthLayout.scss";
 
 const AuthLayout = (props: { children: ReactNode }) => {
-  const path = window.location.pathname;
+  // const path = window.location.pathname;
   const { children } = props;
 
   return (

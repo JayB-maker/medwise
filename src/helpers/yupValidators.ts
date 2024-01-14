@@ -18,7 +18,7 @@ export const yupValidators = {
     .test(
       "len",
       "phone number must be exactly 11 characters",
-      (val) => val?.length === 11
+      (val:any) => val?.length === 11
     )
     .matches(phoneRegExp, "Invalid Phone Number"),
   bvn: yup
@@ -28,7 +28,7 @@ export const yupValidators = {
     .test(
       "len",
       "bvnmust be exactly 11 characters",
-      (val) => val?.length === 11
+      (val:any) => val?.length === 11
     )
     .matches(phoneRegExp, "Invalid Phone Number"),
   email: yup
@@ -76,7 +76,7 @@ export const yupValidators = {
     .test(
       "len",
       "account number must be exactly 10 characters",
-      (val) => val?.length === 10
+      (val:any) => val?.length === 10
     )
     .matches(phoneRegExp, "Invalid Account Number"),
   amount: yup.string().trim().required("Amount is required"),

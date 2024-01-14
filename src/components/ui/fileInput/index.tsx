@@ -13,7 +13,7 @@ interface FileInputProps {
 }
 
 const FileInput = (props: FileInputProps) => {
-  const { className, labelText, onChange, value, id, name, invertStyle, multiple, isUploading } =
+  const { className, labelText, onChange, value, id, name, invertStyle, multiple } =
     props;
   return (
     <>

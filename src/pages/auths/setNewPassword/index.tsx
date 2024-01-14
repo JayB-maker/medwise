@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { dataQueryStatus } from "../../../utils/dataQueryStatus";
 import axios from "axios";
-import { apiQueryMethods, apiUrls } from "../../../utils/api";
+import { apiQueryMethods } from "../../../utils/api";
 
 const { IDLE, LOADING, SUCCESS, ERROR } = dataQueryStatus;
 
@@ -17,8 +17,8 @@ const SetNewPassword = () => {
   } = useForm();
 
   const [status, setStatus] = useState(IDLE);
-  const [message, setMessage] = useState("");
-  const [alert, setAlert] = useState(false);
+  // const [message, setMessage] = useState("");
+  // const [alert, setAlert] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,13 +30,14 @@ const SetNewPassword = () => {
 
   const forgotPassword = async (data: any) => {
     setStatus(LOADING);
-    setMessage("");
+    // setMessage("");
     axios({
       method: apiQueryMethods?.POST,
       // url: apiUrls?.resetPassword,
       data,
     })
       .then((resp) => {
+        resp
         setStatus(SUCCESS);
         reset();
         setTimeout(() => {
@@ -44,8 +45,9 @@ const SetNewPassword = () => {
         }, 2000);
       })
       .catch((err) => {
-        setAlert(true);
-        setMessage(err.response.data.message);
+        err
+        // setAlert(true);
+        // setMessage(err.response.data.message);
         setStatus(ERROR);
       });
   };

@@ -23,7 +23,7 @@ const Alert = (props: AlertProps) => {
     alertOut,
     IDLE,
   } = props;
-  const [alert, setAlert] = useState(show);
+  const [alert] = useState(show);
   const [toggleDetails, setToggleDetails] = useState(false);
 
   useEffect(() => {

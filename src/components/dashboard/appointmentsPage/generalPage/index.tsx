@@ -8,7 +8,7 @@ import MoreIcon from "../../../../assets/more-icon.svg";
 import { PrimaryButton } from "../../../ui/Button copy/Button";
 import AddAppointmentModal from "./AddAppointmentModal";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";

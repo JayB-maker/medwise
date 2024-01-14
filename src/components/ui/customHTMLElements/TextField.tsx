@@ -19,11 +19,11 @@ type inputProps = {
 
 const TextField: FC<inputProps> = ({
   allowPadding = true,
-  icon,
+  // icon,
   type = "text",
   label,
-  iconClassName,
-  src,
+  // iconClassName,
+  // src,
   min,
   max,
   placeholder,

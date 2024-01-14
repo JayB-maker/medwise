@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import FileInput from "../fileInput";
 import "./DragAndDropFile.scss";
 
@@ -11,7 +11,7 @@ interface DragAndDropFileProps {
 }
 
 const DragAndDropFile = (props: DragAndDropFileProps) => {
-  const { onDrop, onChange, labelText, files, isUploading } = props;
+  const { onDrop, labelText, files, isUploading } = props;
   //   const [files, setFiles] = useState();
 
   const handleDrop = (event: any) => {

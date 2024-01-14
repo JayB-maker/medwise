@@ -25,15 +25,15 @@ const Dropdown = (props: DropdownTypes) => {
     labelClass,
     label,
     placeholder,
-    value,
+    // value,
     id,
-    name,
+    // name,
     className,
     onChange,
     options,
-    register,
-    required,
-    pattern
+    // register,
+    // required,
+    // pattern
   } = props;
 
   return (

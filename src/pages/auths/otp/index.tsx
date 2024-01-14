@@ -1,4 +1,4 @@
-import { Button, InputPin } from "../../../components/ui";
+import { Button } from "../../../components/ui";
 import { useNavigate } from "react-router-dom";
 
 const OTPVerification = () => {
@@ -15,7 +15,7 @@ const OTPVerification = () => {
             Enter the code sent to the number you provided
           </p>
           <form className="form">
-            <InputPin />
+            {/* <InputPin /> */}
             <Button
               text="Verify"
               className="login-button"

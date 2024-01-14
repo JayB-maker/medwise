@@ -20,7 +20,7 @@ const Reset = () => {
 
   const [status, setStatus] = useState(IDLE);
   const [message, setMessage] = useState("");
-  const [alert, setAlert] = useState(false);
+  // const [alert, setAlert] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const Reset = () => {
         setMessage(resp.data.message);
       })
       .catch((err) => {
-        setAlert(true);
+        // setAlert(true);
         setMessage(err.response.data.message);
         setStatus(ERROR);
       });

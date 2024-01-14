@@ -13,13 +13,13 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-  const { text, className, onClick, id, invertStyle, isLoading, disabled, type } = props;
+  const { text, className, onClick, id, invertStyle, isLoading, disabled } = props;
   return (
     <div className="custom-button">
       <button
         id={id}
         className={`button ${invertStyle ? "button-invert" : ""} ${className}`}
-        onClick={(e) => {
+        onClick={() => {
           // e.preventDefault();
           onClick?.(id)
         }}
