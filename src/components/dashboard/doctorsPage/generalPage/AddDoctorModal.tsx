@@ -196,7 +196,7 @@ const AddDoctorModal = ({
         <div className="w-full top-0 left-0 px-[36px] py-4 border-0 border-b-[1px] border-solid border-incoverGrey sticky bg-white z-50">
           <div className="flex justify-between items-center">
             <h2 className="text-[24px] leading-[32px] font-[600]">
-              {isEdit ? "Edit Doctor" : "Add Doctor"}
+              {isEdit ? "Edit Worker" : "Add Worker"}
             </h2>
             <img
               src={CloseIcon}
@@ -210,7 +210,7 @@ const AddDoctorModal = ({
         </div>
         <div className="w-full -mt-4">
           <p className="text-incoverGray pt-10 px-10 -mb-[20px] text-[18px] leading-[28px] font-[800]">
-            Doctor Details
+            Worker Details
           </p>
           <form
             className="pt-10 flex flex-col gap-[32px]"
@@ -242,7 +242,7 @@ const AddDoctorModal = ({
               )}
 
               <FileInput
-                labelText="Tap to upload patient images"
+                labelText="Tap to upload worker images"
                 onChange={setImageFile}
                 multiple
               />

@@ -171,7 +171,7 @@ const DoctorsPage = () => {
         />
         {userRole === "ADMIN" && (
           <PrimaryButton
-            title="Add Doctor"
+            title="Add Worker"
             className="h-fit"
             onClick={() => {
               setDoctorModal(true);

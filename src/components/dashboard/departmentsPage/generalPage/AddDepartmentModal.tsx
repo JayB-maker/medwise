@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { OutlineButton, PrimaryButton } from "../../../ui/Button copy/Button";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
 import CustomTextArea from "../../../ui/customHTMLElements/CustomTextArea";
-import { db, storage } from "../../../../firebase";
+import { auth, db, storage } from "../../../../firebase";
 import {
   addDoc,
   collection,
@@ -99,6 +99,7 @@ const AddDepartmentModal = ({
     try {
       await addDoc(collection(db, "departments"), {
         ...data,
+        uid: auth.currentUser?.uid,
         createdAt: serverTimestamp(),
       })
         .then(() => {
@@ -216,7 +217,7 @@ const AddDepartmentModal = ({
               )}
 
               <FileInput
-                labelText="Tap to upload patient images"
+                labelText="Tap to upload department image"
                 onChange={setImageFile}
                 multiple
               />

@@ -108,7 +108,7 @@ export default function PatientsPageDetails() {
                 }}
               />
               <div className="py-8 pr-4 border-b flex items-center justify-between">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <p className="text-[24px] font-[600]">
                     {data?.firstName + " " + data?.lastName}
                   </p>
@@ -134,8 +134,8 @@ export default function PatientsPageDetails() {
                   <p className="px-4 ml-3 py-2 rounded-[32px] bg-[#8A6F4430] text-[#8A6F44] text-[14px] ">
                     {data?.role || "null"}
                   </p>
-                  {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
-                </div>
+                  <img src={ThirdIcon} alt="" className="pl-3" />
+                </div> */}
                 <div className="flex gap-[12px]">
                   <OtherButton
                     title="Update Patient Record"

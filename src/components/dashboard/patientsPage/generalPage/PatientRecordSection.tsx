@@ -184,7 +184,7 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
             errors={errors.prescription}
             {...register("prescription")}
             defaultValue={isEdit ? selectedRecord?.prescription : ""}
-            required
+            // required
           />
         </div>
 
