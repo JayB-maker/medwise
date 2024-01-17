@@ -47,7 +47,7 @@ const UpdateRecordModal = ({
     const templateParams = {
       to_email: `${details?.doctor}`,
       from_name: "Medwise",
-      patient_page: `medwisee.netlify.app/patients/${id}`,
+      patient_page: `https://medwisee.netlify.app/patients/${id}`,
     };
 
     emailjs
