@@ -53,6 +53,9 @@ const OverviewPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
+  message
+  status
+
   const fetchPatients = async () => {
     setStatus(LOADING);
     const patient: any = [];
