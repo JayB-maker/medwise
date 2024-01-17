@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CopyIcon from "../../../../assets/copy-icon.svg";
+// import CopyIcon from "../../../../assets/copy-icon.svg";
 import ShieldIcon from "../../../../assets/shield-icon.svg";
 import DownloadIcon from "../../../../assets/download-icon.svg";
 import UpdateIcon from "../../../../assets/submitted.svg";
@@ -21,7 +21,7 @@ import LabRecordModal from "./LabRecordModal";
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
 export default function PatientsPageDetails() {
-  const [copied, setCopied] = useState(false);
+  const [copied, ] = useState(false);
   const [data, setData] = useState<any>();
   const [status, setStatus] = useState(IDLE);
   const [message, setMessage] = useState("");
