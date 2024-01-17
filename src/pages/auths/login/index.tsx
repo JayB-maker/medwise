@@ -31,7 +31,6 @@ const Login = () => {
   }, []);
 
   const fetchUser = async (userCredentials: any, collection: string) => {
-    console.log(collection, "coll");
     // const patient: any = [];
     try {
       const docSnap = await getDoc(
@@ -82,8 +81,6 @@ const Login = () => {
     setStatus(LOADING);
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredentials: any) => {
-        console.log(userCredentials);
-        console.log(userCredentials._tokenResponse?.idToken);
         setStatus(SUCCESS);
         reset();
         fetchUser(userCredentials, data.role);

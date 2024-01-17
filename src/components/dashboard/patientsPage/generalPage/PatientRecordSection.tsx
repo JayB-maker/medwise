@@ -43,7 +43,6 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
           ? (data.isCured = selectedRecord.isCured)
           : (data.isCured = data.isCured),
         (data.recordId = selectedRecord.recordId),
-        console.log(data),
         handleUpdateDetail(data),
         setIsEdit(false),
         reset())

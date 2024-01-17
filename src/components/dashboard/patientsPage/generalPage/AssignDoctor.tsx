@@ -1,30 +1,26 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ModalContainer } from "../../../ui/modal/ModalContainer";
 import CloseIcon from "../../../../assets/close-icon.svg";
+import { useForm } from "react-hook-form";
+import CustomSelect from "../../../ui/customHTMLElements/CustomSelect";
 import { OutlineButton, PrimaryButton } from "../../../ui/Button copy/Button";
 import { dataQueryStatus } from "../../../../utils/dataQueryStatus";
 import { db } from "../../../../firebase";
 import {
   collection,
-  doc,
   getDocs,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { getErrorMessage } from "../../../../utils/helpers";
 import { toast } from "react-toastify";
-import LabRecordSection from "./LabRecordSection";
 import emailjs, { EmailJSResponseStatus } from "emailjs-com";
 import PageLoaderModal from "../../../ui/loader/PageLoaderModal";
-import CustomSelect from "../../../ui/customHTMLElements/CustomSelect";
-import { useForm } from "react-hook-form";
 
 const { IDLE, LOADING, SUCCESS, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
-const LabRecordModal = ({
+const AssignDoctorModal = ({
   showModal,
   closeModal,
+  isEdit,
   data,
   getData,
 }: {
@@ -34,15 +30,18 @@ const LabRecordModal = ({
   data?: any;
   getData?: any;
 }): JSX.Element => {
-  const [status, setStatus] = useState(IDLE);
+  const { control } = useForm();
+
   const [details, setDetails] = useState<any>();
+  const [status, setStatus] = useState(IDLE);
   const [workerStatus, setWorkerStatus] = useState(IDLE);
   const [workerData, setWorkerData] = useState<any>();
-  const [labRecordList, setLabRecordList] = useState<any>(
-    data?.patientLabRecord || []
-  );
 
-  const { control } = useForm();
+  const handleChange = (target: any, name: any) => {
+    setDetails({ ...details, [name]: target?.value });
+  };
+
+  console.log(details)
 
   const sendEmail = (id: any) => {
     const templateParams = {
@@ -59,10 +58,16 @@ const LabRecordModal = ({
         "p9WGl4AT6mN33UJzH"
       )
       .then((response: EmailJSResponseStatus) => {
-        console.log("Email sent:", response);
+        setStatus(SUCCESS);
+        getData();
+        response;
+        closeModal(!showModal);
+        toast.success("Assigned successfully");
       })
       .catch((error) => {
-        console.error("Error sending email:", error);
+        setStatus(ERROR);
+        error;
+        toast.error("Error Assigning doctor");
       });
   };
 
@@ -89,29 +94,9 @@ const LabRecordModal = ({
     fetchWorkers();
   }, []);
 
-  const handleUpdate = async () => {
+  const handleAssign = async () => {
     setStatus(LOADING);
-    const request = { ...data, patientLabRecord: labRecordList };
-    try {
-      const docRef = doc(db, "patients", data?.id);
-
-      await (data?.patientRecord?.length > 0 ? updateDoc : setDoc)(docRef, {
-        ...request,
-        updatedAt: serverTimestamp(),
-      });
-      sendEmail(data?.id);
-      setStatus(SUCCESS);
-      toast.success("Patient record successfully updated");
-      closeModal(!showModal);
-      getData();
-    } catch (error: any) {
-      setStatus(ERROR);
-      toast.error(getErrorMessage(error.message));
-    }
-  };
-
-  const handleChange = (target: any, name: any) => {
-    setDetails({ ...details, [name]: target?.value });
+    sendEmail(data?.id);
   };
 
   return (
@@ -123,7 +108,7 @@ const LabRecordModal = ({
           <div className="w-full top-0 left-0 px-[36px] py-4 border-0 border-b-[1px] border-solid border-incoverGrey sticky bg-white z-50">
             <div className="flex justify-between items-center">
               <h2 className="text-[24px] leading-[32px] font-[600]">
-                Request for a Record
+                {isEdit ? "Edit Patient" : "Add Patient"}
               </h2>
               <img
                 src={CloseIcon}
@@ -136,51 +121,54 @@ const LabRecordModal = ({
             </div>
           </div>
           <div className="w-full -mt-4">
-            <div className="pt-4 flex flex-col">
-              <LabRecordSection
-                labRecordList={labRecordList}
-                setLabRecordList={setLabRecordList}
-              />
-              <div className="flex justify-between items-center px-10 mb-4">
-                <p className=" text-incoverGray pt-4 text-[14px] leading-[28px] font-[800]">
-                  Assign a Lab Technician
-                </p>
-              </div>
-              <div className="grid grid-cols-1 mb-[140px] gap-10 justify-between w-[100%] px-[32px]">
-                <CustomSelect
-                  control={control}
-                  placeholder="Assign Lab Technician"
-                  options={workerData}
-                  name="doctor"
-                  handleChange={(e, a) => handleChange(e, a)}
-                />
-              </div>
-              <div className="mt-[23px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
-                <div className="flex justify-between">
-                  <OutlineButton
-                    type="submit"
-                    title="Cancel"
-                    className="text-center align-middle w-[256px] py-[12px]"
-                    disabled={status === LOADING ? true : false}
-                    onClick={() => closeModal(!showModal)}
-                  />
-                  <PrimaryButton
-                    type="button"
-                    title="Submit"
-                    className="text-center align-middle w-[256px] py-[12px]"
-                    loader={status === LOADING ? true : false}
-                    disabled={status === LOADING}
-                    onClick={handleUpdate}
+            <p className="text-incoverGray pt-10 px-10 -mb-[20px] text-[18px] leading-[28px] font-[800]">
+              Assign Doctor
+            </p>
+
+            <div className="pt-10 flex flex-col gap-[32px] mb-[200px]">
+              <div className="px-10 flex flex-col gap-[32px]">
+                <div className="grid grid-cols-1 gap-10 justify-between w-[100%] ">
+                  <CustomSelect
+                    placeholder="Doctor"
+                    options={workerData}
+                    control={control}
+                    name="doctor"
+                    handleChange={(e, a) => handleChange(e, a)}
                   />
                 </div>
+              </div>
+            </div>
+            <div className="mt-[108px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
+              <div className="flex justify-between">
+                <OutlineButton
+                  type="submit"
+                  title="Cancel"
+                  className="text-center align-middle w-[256px] py-[12px]"
+                  disabled={status === LOADING ? true : false}
+                  onClick={() => closeModal(!showModal)}
+                />
+                <PrimaryButton
+                  type="submit"
+                  title="Submit"
+                  className="text-center align-middle w-[256px] py-[12px]"
+                  loader={status === LOADING ? true : false}
+                  disabled={details?.doctor?.length === 0}
+                  onClick={handleAssign}
+                />
               </div>
             </div>
           </div>
         </div>
       </ModalContainer>
+      {/* {status === SUCCESS && (
+        <SuccessfulModal title="Successful" subTitle={message} onClick={refresh} />
+      )}
+      {status === ERROR && (
+        <Alert title={message} text={message} alertOut={setStatus} />
+      )} */}
       {workerStatus === LOADING && <PageLoaderModal />}
     </>
   );
 };
 
-export default LabRecordModal;
+export default AssignDoctorModal;

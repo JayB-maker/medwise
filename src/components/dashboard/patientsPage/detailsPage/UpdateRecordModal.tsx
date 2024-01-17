@@ -38,10 +38,8 @@ const UpdateRecordModal = ({
   const [recordList, setRecordList] = useState<any>(data?.patientRecord);
 
   const { control } = useForm();
-  const [doctorStatus, setDoctorStatus] = useState(IDLE);
-  const [doctorData, setDoctorData] = useState<any>();
-
-  console.log(details)
+  const [workerStatus, setWorkerStatus] = useState(IDLE);
+  const [workerData, setWorkerData] = useState<any>();
 
   const sendEmail = (id: any) => {
     const templateParams = {
@@ -65,25 +63,21 @@ const UpdateRecordModal = ({
       });
   };
 
-  // Replace 'your_service_id', 'your_template_id', and 'your_user_id' with your actual EmailJS service ID, template ID, and user ID.
-
   const fetchWorkers = async () => {
-    setDoctorStatus(LOADING);
+    setWorkerStatus(LOADING);
     const doctor: Array<object> = [];
     try {
       const querySnapshot = await getDocs(collection(db, "workers"));
       querySnapshot.forEach((doc: any) => {
-        console.log(doc, "deoc");
         doctor.push({
           value: doc.data().email,
           label: doc.data().firstName + " " + doc.data().lastName,
         });
       });
-      doctor.length > 0 ? setDoctorStatus(DATAMODE) : setDoctorStatus(NULLMODE);
-      console.log(doctor, "deoc");
-      setDoctorData(doctor);
+      doctor.length > 0 ? setWorkerStatus(DATAMODE) : setWorkerStatus(NULLMODE);
+      setWorkerData(doctor);
     } catch (error: any) {
-      setDoctorStatus(ERROR);
+      setWorkerStatus(ERROR);
       toast(getErrorMessage(error.message));
     }
   };
@@ -144,7 +138,7 @@ const UpdateRecordModal = ({
                 recordList={recordList}
                 setRecordList={setRecordList}
               />
-              <div className="flex justify-between items-center px-10">
+              <div className="flex justify-between items-center px-10 mb-4">
                 <p className=" text-incoverGray pt-4 text-[14px] leading-[28px] font-[800]">
                   Assign a doctor
                 </p>
@@ -153,7 +147,7 @@ const UpdateRecordModal = ({
                 <CustomSelect
                   control={control}
                   placeholder="Assign Doctor"
-                  options={doctorData}
+                  options={workerData}
                   name="doctor"
                   handleChange={(e, a) => handleChange(e, a)}
                 />
@@ -182,7 +176,7 @@ const UpdateRecordModal = ({
           </div>
         </div>
       </ModalContainer>
-      {doctorStatus === LOADING && <PageLoaderModal />}
+      {workerStatus === LOADING && <PageLoaderModal />}
     </>
   );
 };

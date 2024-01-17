@@ -48,12 +48,30 @@ export const navbarDetails = [
   //   handle: "Payments",
   //   path: "/payments",
   // },
+  // {
+  //   iconSRC:
+  //     "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview_lnq58n.png",
+  //   activeIconSRC:
+  //     "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview-2_wwccrg.png",
+  //   handle: "Settings",
+  //   path: "/settings",
+  // },
+];
+export const patientNavDetails = [
   {
     iconSRC:
       "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview_lnq58n.png",
     activeIconSRC:
       "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview-2_wwccrg.png",
-    handle: "Settings",
-    path: "/settings",
+    handle: "Patients",
+    path: "/patients",
+  },
+  {
+    iconSRC:
+      "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview_lnq58n.png",
+    activeIconSRC:
+      "https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/overview-2_wwccrg.png",
+    handle: "Departments",
+    path: "/departments",
   },
 ];

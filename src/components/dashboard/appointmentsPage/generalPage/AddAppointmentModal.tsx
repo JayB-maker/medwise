@@ -53,7 +53,6 @@ const AddAppointmentModal = ({
     try {
       const querySnapshot = await getDocs(collection(db, "doctors"));
       querySnapshot.forEach((doc: any) => {
-        console.log(doc, "deoc");
         doctor.push({
           value: doc.data().firstName + " " + doc.data().lastName,
           label: doc.data().firstName + " " + doc.data().lastName,

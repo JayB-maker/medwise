@@ -38,7 +38,6 @@ const DeleteModal = ({
       toast.success("Successfully deleted");
     } catch (error: any) {
       setStatus(ERROR);
-      console.log(error, "error");
       toast.error(getErrorMessage(error));
     }
   };

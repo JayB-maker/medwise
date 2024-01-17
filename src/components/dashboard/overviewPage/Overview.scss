@@ -6,23 +6,37 @@
 
     .finance-cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 24px;
 
       .finance-card {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
-        border: 1px solid rgb(157, 157, 157);
-        padding: 16px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
         border-radius: 8px;
+        box-shadow: 5px 10px 20px #00000030;
 
-        p {
-          font-size: 14px;
+        .content {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          border-radius: 8px;
+
+          p {
+            font-size: 14px;
+          }
+          h1 {
+            font-size: 24px;
+            line-height: 120%;
+          }
         }
-        h1 {
-          font-size: 32px;
-        }
+
+        // .icon {
+          img{
+            width: 60px;
+          }
+        // }
       }
     }
   }
@@ -70,9 +84,9 @@
       }
     }
   }
-  .mini-details{
-    .user-details-card{
-        width: 100%;
+  .mini-details {
+    .user-details-card {
+      width: 100%;
     }
   }
 }

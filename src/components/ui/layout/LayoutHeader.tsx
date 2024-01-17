@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ILayoutProps } from "./LayoutSidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ImageAvatar from "../../../assets/avatar.png";
 import NextIcon from "../../../assets/arrow-right-icon.svg";
 import { useAuth } from "../../../context/AuthContext";
@@ -79,7 +79,7 @@ const LayoutHeader = (props: ILayoutProps) => {
                 <h4 style={{ color: "white" }}>{firstLetter + lastLetter}</h4>
               </div>
               <div className="profile-menu" onClick={() => setMenu(!menu)}>
-                <span>Profile</span>
+                <span>Logout</span>
                 <img
                   src="https://res.cloudinary.com/dm19qay3n/image/upload/v1666004166/internal-dashboard/arrow_qev5ch.png"
                   alt="arrow"
@@ -87,13 +87,13 @@ const LayoutHeader = (props: ILayoutProps) => {
               </div>
               {menu && (
                 <div className="menu-wrapper">
-                  <Link
+                  {/* <Link
                     to="/settings"
                     className="menu-bar"
                     style={{ textDecoration: "none" }}
                   >
                     Profile
-                  </Link>
+                  </Link> */}
                   <span className="menu-bar" onClick={() => handleLogout()}>
                     Logout
                   </span>

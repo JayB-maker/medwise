@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import DeleteModal from "../../../ui/modal/deleteModal/DeleteModal";
 import { useNavigate } from "react-router";
 import { LOCAL_STORAGE_KEYS } from "../../../../helpers/localStorageKeys";
+import AssignDoctorModal from "./AssignDoctor";
 
 const { IDLE, LOADING, ERROR, DATAMODE, NULLMODE } = dataQueryStatus;
 
@@ -26,6 +27,7 @@ const PatientsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [patientModal, setPatientModal] = useState(false);
+  const [assignModal, setAssignModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -82,6 +84,11 @@ const PatientsPage = () => {
   const handleEditModal = (data: any) => {
     setPatientModal(true);
     setIsEdit(true);
+    setSelectedPatient(data);
+  };
+
+  const handleAssignModal = (data: any) => {
+    setAssignModal(true);
     setSelectedPatient(data);
   };
 
@@ -191,13 +198,14 @@ const PatientsPage = () => {
                                   <img src={DetailsIcon} alt="" />
                                   <p className="pl-2">View</p>
                                 </div>
-                                <div
+                                {/* <div
                                   onClick={() => handleEditModal(plan)}
                                   className="flex items-center"
                                 >
                                   <img src={DetailsIcon} alt="" />
                                   <p className="pl-2">Edit</p>
-                                </div>
+                                </div> */}
+
                                 {/* <div
                                 onClick={() => handleDeleteModal(plan)}
                                 className="flex items-center"
@@ -273,6 +281,13 @@ const PatientsPage = () => {
                                 <img src={DetailsIcon} alt="" />
                                 <p className="pl-2">Edit</p>
                               </div>
+                              <div
+                                onClick={() => handleAssignModal(plan)}
+                                className="flex items-center"
+                              >
+                                <img src={DetailsIcon} alt="" />
+                                <p className="pl-2">Assign Doctor</p>
+                              </div>
                               {/* <div
                                 onClick={() => handleDeleteModal(plan)}
                                 className="flex items-center"
@@ -289,7 +304,7 @@ const PatientsPage = () => {
                 )
               )}
             </div>
-            {patientData?.length > 0 && (
+            {patientData?.length > 0 && userRole !== "PATIENT" && (
               <Pagination
                 postsPerPage={postsPerPage}
                 totalPosts={patientData?.length}
@@ -331,6 +346,15 @@ const PatientsPage = () => {
         <AddPatientModal
           showModal={patientModal}
           closeModal={setPatientModal}
+          isEdit={isEdit}
+          data={selectedPatient}
+          getData={fetchPatients}
+        />
+      )}
+      {assignModal && (
+        <AssignDoctorModal
+          showModal={assignModal}
+          closeModal={setAssignModal}
           isEdit={isEdit}
           data={selectedPatient}
           getData={fetchPatients}

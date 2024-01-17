@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { navbarDetails } from "../../../data/navDetails";
+import { navbarDetails, patientNavDetails } from "../../../data/navDetails";
 import MedwiseLogo from "../../../assets/medwise-logo.svg";
 import MedwiseIcon from "../../../assets/medwise-icon.svg";
+import { LOCAL_STORAGE_KEYS } from "../../../helpers/localStorageKeys";
 
 export interface ILayoutProps {
   isSidebarExpanded?: any;
@@ -25,6 +26,16 @@ const LayoutSidebar = (props: ILayoutProps) => {
     setClickedIndex,
   } = props;
   const path = window.location.pathname;
+
+  const [userRole, setUserRole] = useState();
+
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
 
   // Load the data from localStorage when the component mounts
   useEffect(() => {
@@ -73,48 +84,49 @@ const LayoutSidebar = (props: ILayoutProps) => {
             />
           </div>
           <div className="navbars">
-            {navbarDetails.map((navbar, index) =>
-              // navbar.subMenu ? (
-              //   <>
-              //     <div
-              //       className="drop"
-              //       onClick={() => toggle(index)}
-              //       key={index}
-              //     >
-              //       <div className="navbar">
-              //         <img
-              //           src={
-              //             navbar.path === path
-              //               ? navbar.activeIconSRC
-              //               : navbar.iconSRC
-              //           }
-              //           alt="Icon"
-              //         />
-              //         <h6 className={`${isSidebarExpanded ? "show" : "hide"}`}>
-              //           {navbar.handle}
-              //         </h6>
-              //       </div>
-              //       <img src="assets/arrow.svg" alt="arrow" className="arrow" />
-              //     </div>
-              //     {clickedIndex === index &&
-              //       navbar.subMenu.map((submenu, index) => (
-              //         <Link
-              //           style={{ textDecoration: "none" }}
-              //           className={`navbar sub ${
-              //             submenu.path === path ? "active" : ""
-              //           }`}
-              //           to={submenu.path}
-              //           key={index}
-              //         >
-              //           <h6
-              //             className={`${isSidebarExpanded ? "show" : "hide"}`}
-              //           >
-              //             {submenu.handle}
-              //           </h6>
-              //         </Link>
-              //       ))}
-              //   </>
-              // ) : (
+            {(userRole === "PATIENT" ? patientNavDetails : navbarDetails).map(
+              (navbar, index) => (
+                // navbar.subMenu ? (
+                //   <>
+                //     <div
+                //       className="drop"
+                //       onClick={() => toggle(index)}
+                //       key={index}
+                //     >
+                //       <div className="navbar">
+                //         <img
+                //           src={
+                //             navbar.path === path
+                //               ? navbar.activeIconSRC
+                //               : navbar.iconSRC
+                //           }
+                //           alt="Icon"
+                //         />
+                //         <h6 className={`${isSidebarExpanded ? "show" : "hide"}`}>
+                //           {navbar.handle}
+                //         </h6>
+                //       </div>
+                //       <img src="assets/arrow.svg" alt="arrow" className="arrow" />
+                //     </div>
+                //     {clickedIndex === index &&
+                //       navbar.subMenu.map((submenu, index) => (
+                //         <Link
+                //           style={{ textDecoration: "none" }}
+                //           className={`navbar sub ${
+                //             submenu.path === path ? "active" : ""
+                //           }`}
+                //           to={submenu.path}
+                //           key={index}
+                //         >
+                //           <h6
+                //             className={`${isSidebarExpanded ? "show" : "hide"}`}
+                //           >
+                //             {submenu.handle}
+                //           </h6>
+                //         </Link>
+                //       ))}
+                //   </>
+                // ) : (
                 <Link
                   style={{ textDecoration: "none" }}
                   className={`navbar ${navbar.path === path ? "active" : ""}`}
@@ -133,6 +145,7 @@ const LayoutSidebar = (props: ILayoutProps) => {
                     {navbar.handle}
                   </h6>
                 </Link>
+              )
               // )
             )}
           </div>

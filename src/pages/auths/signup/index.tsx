@@ -1,7 +1,7 @@
 import { Button, Input, InputPassword } from "../../../components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { dataQueryStatus } from "../../../utils/dataQueryStatus";
 import Alert from "../../../components/ui/alert";
 import { auth } from "../../../firebase";
@@ -32,10 +32,12 @@ const Signup = () => {
     setStatus(LOADING);
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredentials) => {
-        console.log(userCredentials), setStatus(SUCCESS);
+        userCredentials;
+        setStatus(SUCCESS);
       })
       .catch((err) => {
-        console.log(err), setStatus(ERROR);
+        err;
+        setStatus(ERROR);
       });
   };
 

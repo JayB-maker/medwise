@@ -83,7 +83,6 @@ const LabRecordSection = (props: IPatientSectionProps) => {
         data.lab === "" ? (data.lab = selectedRecord.lab) : data.lab,
         // data.labResult === "" ? (data.labResult = selectedRecord.labResult) : data.labResult
         (data.recordId = selectedRecord.recordId),
-        console.log(data),
         handleUpdateDetail(data),
         setIsEdit(false),
         reset())
