@@ -144,7 +144,7 @@ export default function PatientsPageDetails() {
                   </p>
                   {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
                 </div>
-                {userRole !== "PATIENT" && userRole !== "LAB_TECNICIAN" && (
+                {userRole !== "PATIENT" && userRole !== "LAB_TECHNICIAN" && (
                   <div className="flex gap-[12px]">
                     <OtherButton
                       title="Update Patient Record"

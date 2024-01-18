@@ -12,32 +12,34 @@ import Overview1 from "../../../assets/overview1.svg";
 import Overview2 from "../../../assets/overview2.svg";
 import Overview3 from "../../../assets/overview3.svg";
 import Overview4 from "../../../assets/overview4.svg";
+import { LOCAL_STORAGE_KEYS } from "../../../helpers/localStorageKeys";
+import { useNavigate } from "react-router";
 
 const financeCardDetails = [
   {
     key: "Total Patients",
-    value: "₦1,000",
+    value: "1,000",
     color: "white",
     backgroundColor: "rgba(0, 108, 51, 1)",
     icon: Overview1,
   },
   {
     key: "Total Doctor",
-    value: "5000",
+    value: "100",
     color: "rgba(0, 108, 51, 1)",
     backgroundColor: "rgba(206, 167, 102, 1)",
     icon: Overview2,
   },
   {
     key: "Total Departments",
-    value: "5000",
+    value: "50",
     color: "white",
     backgroundColor: "rgba(0, 108, 51, 1)",
     icon: Overview3,
   },
   {
     key: "Total Doctor",
-    value: "5000",
+    value: "100",
     color: "rgba(0, 108, 51, 1)",
     backgroundColor: "rgba(206, 167, 102, 1)",
     icon: Overview4,
@@ -52,9 +54,24 @@ const OverviewPage = () => {
   const [message, setMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [userRole, setUserRole] = useState();
+  const Navigate = useNavigate();
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
 
-  message
-  status
+  useEffect(() => {
+    if (userRole === "PATIENT"){
+      Navigate("/patients");
+    } 
+  }, [userRole]);
+
+  message;
+  status;
 
   const fetchPatients = async () => {
     setStatus(LOADING);
@@ -110,7 +127,7 @@ const OverviewPage = () => {
                 <h1>{detail.value}</h1>
               </div>
               {/* <div className="icon"> */}
-                <img src={detail.icon} alt={detail.key} />
+              <img src={detail.icon} alt={detail.key} />
               {/* </div> */}
             </div>
           ))}
