@@ -86,6 +86,8 @@ const UpdateRecordModal = ({
     fetchWorkers();
   }, []);
 
+  console.log(recordList, "record");
+
   const handleUpdate = async () => {
     setStatus(LOADING);
     const request = { ...data, patientRecord: recordList };
@@ -134,16 +136,12 @@ const UpdateRecordModal = ({
           </div>
           <div className="w-full -mt-4">
             <div className="pt-4 flex flex-col">
-              <PatientRecordSection
-                recordList={recordList}
-                setRecordList={setRecordList}
-              />
               <div className="flex justify-between items-center px-10 mb-4">
                 <p className=" text-incoverGray pt-4 text-[14px] leading-[28px] font-[800]">
                   Assign a doctor
                 </p>
               </div>
-              <div className="grid grid-cols-1 mb-[140px] gap-10 justify-between w-[100%] px-[32px]">
+              <div className="grid grid-cols-1 gap-10 justify-between w-[100%] px-[32px]">
                 <CustomSelect
                   control={control}
                   placeholder="Assign Doctor"
@@ -152,6 +150,10 @@ const UpdateRecordModal = ({
                   handleChange={(e, a) => handleChange(e, a)}
                 />
               </div>
+              <PatientRecordSection
+                recordList={recordList}
+                setRecordList={setRecordList}
+              />
 
               <div className="mt-[23px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
                 <div className="flex justify-between">

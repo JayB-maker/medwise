@@ -5,6 +5,7 @@ import MoreIcon from "../../../../assets/more-icon.svg";
 import DetailsIcon from "../../../../assets/view-details-icon.svg";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { LOCAL_STORAGE_KEYS } from "../../../../helpers/localStorageKeys";
 
 interface IPatientSectionProps {
   setDetails?: any;
@@ -24,6 +25,15 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const [selectedRecord, setSelectedRecord] = useState<any>();
+  const [userRole, setUserRole] = useState();
+
+  useEffect(() => {
+    const userDetails: any = localStorage.getItem(
+      LOCAL_STORAGE_KEYS.USER_DETAILS
+    );
+    const parsedUserDetails = JSON.parse(userDetails);
+    setUserRole(parsedUserDetails?.role);
+  }, []);
 
   useEffect(() => {
     // const { isCured } = selectedRecord;
@@ -46,7 +56,7 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
         handleUpdateDetail(data),
         setIsEdit(false),
         reset())
-      : ((data.isCured = data.isCured),
+      : ((data.isCured = data.isCured === undefined ? false : data.isCured),
         (data.recordId = Date.now() + Math.random().toString(36).substr(2, 5)),
         setRecordList((prevArray: any) => [...prevArray, data]),
         setIsEdit(false),
@@ -66,7 +76,10 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
             ...detail,
             diagnose: updatedDetail.diagnose,
             prescription: updatedDetail.prescription,
-            isCured: updatedDetail.isCured,
+            isCured:
+              updatedDetail.isCured === undefined
+                ? false
+                : updatedDetail.isCured,
           };
         }
         return detail;
@@ -177,41 +190,45 @@ const PatientRecordSection = (props: IPatientSectionProps) => {
             defaultValue={isEdit ? selectedRecord?.diagnose : ""}
             required
           />
-          <CustomInputField
-            type="text"
-            label="Prescription"
-            errors={errors.prescription}
-            {...register("prescription")}
-            defaultValue={isEdit ? selectedRecord?.prescription : ""}
-            // required
-          />
+          {userRole === "DOCTOR" && (
+            <CustomInputField
+              type="text"
+              label="Prescription"
+              errors={errors.prescription}
+              {...register("prescription")}
+              defaultValue={isEdit ? selectedRecord?.prescription : ""}
+              // required
+            />
+          )}
         </div>
 
-        <div className="flex justify-between items-center w-full">
-          <div className="flex">
-            <div className="flex items-center h-5">
-              <input
-                id="helper-checkbox"
-                aria-describedby="helper-checkbox-text"
-                type="checkbox"
-                // value={isCured}
-                {...register("isCured")}
-                // value={isEdit ? selectedRecord?.isCured : ""}
-                // defaultChecked={isEdit ? selectedRecord?.isCured : ""}
-                // checked = {isCured ? true : false}
-                className="w-4 h-4 accent-incoverGreen text-incoverGreen bg-gray-100 border-solid border-gray-300 rounded focus:ring-incoverGreen dark:focus:ring-incoverGreen dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            </div>
-            <div className="ml-2 text-sm">
-              <label
-                htmlFor="helper-checkbox"
-                className="font-medium text-black cursor-pointer"
-              >
-                Cured?
-              </label>
+        {userRole === "DOCTOR" && (
+          <div className="flex justify-between items-center w-full">
+            <div className="flex">
+              <div className="flex items-center h-5">
+                <input
+                  id="helper-checkbox"
+                  aria-describedby="helper-checkbox-text"
+                  type="checkbox"
+                  // value={isCured}
+                  {...register("isCured")}
+                  // value={isEdit ? selectedRecord?.isCured : ""}
+                  // defaultChecked={isEdit ? selectedRecord?.isCured : ""}
+                  // checked = {isCured ? true : false}
+                  className="w-4 h-4 accent-incoverGreen text-incoverGreen bg-gray-100 border-solid border-gray-300 rounded focus:ring-incoverGreen dark:focus:ring-incoverGreen dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+              </div>
+              <div className="ml-2 text-sm">
+                <label
+                  htmlFor="helper-checkbox"
+                  className="font-medium text-black cursor-pointer"
+                >
+                  Cured?
+                </label>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="flex justify-between">
           <div className=""></div>
