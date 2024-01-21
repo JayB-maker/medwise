@@ -297,6 +297,7 @@ const AddDoctorModal = ({
                     { label: "Doctor", value: "DOCTOR" },
                     { label: "Nurse", value: "NURSE" },
                     { label: "Lab Technician", value: "LAB_TECHNICIAN" },
+                    { label: "Pharmacy", value: "PHARMACY" },
                   ]}
                   control={control}
                   name="role"

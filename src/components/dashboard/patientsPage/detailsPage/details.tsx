@@ -144,7 +144,7 @@ export default function PatientsPageDetails() {
                   </p>
                   {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
                 </div>
-                {userRole !== "PATIENT" && userRole !== "LAB_TECHNICIAN" && (
+                {userRole !== "PATIENT" && userRole !== "LAB_TECHNICIAN" && userRole !== "PHARMACY" && (
                   <div className="flex gap-[12px]">
                     <OtherButton
                       title="Update Patient Record"
@@ -284,7 +284,7 @@ export default function PatientsPageDetails() {
                   </div>
                 </div>
                 <div className="flex-1 pr-6 pl-4">
-                  {userRole !== "LAB_TECHNICIAN" && (
+                  {userRole !== "LAB_TECHNICIAN" && userRole !== "PHARMACY" && (
                     <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3">
                       <div className="flex justify-between pb-3 px-6">
                         <div className="flex flex-col">
@@ -411,7 +411,7 @@ export default function PatientsPageDetails() {
                       <p className="text-[18px] leading-6 font-medium">
                         Lab Records
                       </p>
-                      {userRole !== "PATIENT" && userRole !== "NURSE" && (
+                      {userRole !== "PATIENT" && userRole !== "NURSE" && userRole !== "PHARMACY" && (
                         <div className="flex gap-[12px]">
                           <OtherButton
                             title="Request Lab Record"

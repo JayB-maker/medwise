@@ -125,7 +125,7 @@ const AssignDoctorModal = ({
               Assign Doctor
             </p>
 
-            <div className="pt-10 flex flex-col gap-[32px] mb-[200px]">
+            <div className="pt-10 flex flex-col gap-[32px] mb-[300px]">
               <div className="px-10 flex flex-col gap-[32px]">
                 <div className="grid grid-cols-1 gap-10 justify-between w-[100%] ">
                   <CustomSelect
