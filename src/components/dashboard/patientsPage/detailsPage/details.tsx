@@ -144,16 +144,18 @@ export default function PatientsPageDetails() {
                   </p>
                   {/* <img src={ThirdIcon} alt="" className="pl-3" /> */}
                 </div>
-                {userRole !== "PATIENT" && userRole !== "LAB_TECHNICIAN" && userRole !== "PHARMACY" && (
-                  <div className="flex gap-[12px]">
-                    <OtherButton
-                      title="Update Patient Record"
-                      beforeIcon={UpdateIcon}
-                      onClick={() => setUpdateRecord(true)}
-                      className="px-[12px] py-[8px] text-[16px] text-white bg-incoverGreen hover:bg-incoverDimGreen leading-5 font-normal rounded-md"
-                    />
-                  </div>
-                )}
+                {userRole !== "PATIENT" &&
+                  userRole !== "LAB_TECHNICIAN" &&
+                  userRole !== "PHARMACY" && (
+                    <div className="flex gap-[12px]">
+                      <OtherButton
+                        title="Update Patient Record"
+                        beforeIcon={UpdateIcon}
+                        onClick={() => setUpdateRecord(true)}
+                        className="px-[12px] py-[8px] text-[16px] text-white bg-incoverGreen hover:bg-incoverDimGreen leading-5 font-normal rounded-md"
+                      />
+                    </div>
+                  )}
               </div>
               <div className="w-full flex-1 flex md:flex-row flex-col">
                 <div className="w-[30%] border-solid border-[0.5px] h-fit border-[#6F7174] rounded-[12px] flex flex-col">
@@ -406,68 +408,72 @@ export default function PatientsPageDetails() {
                     </div>
                   )}
 
-                  <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3 mt-8 overflow-hidden">
-                    <div className="flex justify-between pb-3 px-6">
-                      <p className="text-[18px] leading-6 font-medium">
-                        Lab Records
-                      </p>
-                      {userRole !== "PATIENT" && userRole !== "NURSE" && userRole !== "PHARMACY" && (
-                        <div className="flex gap-[12px]">
-                          <OtherButton
-                            title="Request Lab Record"
-                            beforeIcon={DownloadIcon}
-                            onClick={() => setLabRecord(true)}
-                            className="px-[12px] py-[4px] text-[16px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
-                          />
+                  {userRole !== "PHARMACY" && (
+                    <div className="border-solid border-[0.5px] border-[#6F7174] rounded-[12px] pt-3 mt-8 overflow-hidden">
+                      <div className="flex justify-between pb-3 px-6">
+                        <p className="text-[18px] leading-6 font-medium">
+                          Lab Records
+                        </p>
+                        {userRole !== "PATIENT" &&
+                          userRole !== "NURSE" &&
+                          userRole !== "PHARMACY" && (
+                            <div className="flex gap-[12px]">
+                              <OtherButton
+                                title="Request Lab Record"
+                                beforeIcon={DownloadIcon}
+                                onClick={() => setLabRecord(true)}
+                                className="px-[12px] py-[4px] text-[16px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
+                              />
+                            </div>
+                          )}
+                      </div>
+                      {data?.patientLabRecord?.length > 0 && (
+                        <div className="flex flex-col rounded-b-[12px]">
+                          <div className="overflow-x-auto overflow-y-hidden w-full">
+                            <div className="flex items-center bg-[#F4F7F9] w-[100%] gap-x-4 overflow-x-auto md:overflow-x-hidden md:gap-x-0  px-4 h-[52px] text-incoverGray text-sm ">
+                              <p className="w-[10%]">S/N</p>
+                              <p className="w-[30%]">Lab Test For</p>
+                              <p className="w-[30%]">lab</p>
+                              <p className="w-[15%}">Done?</p>
+                              <p className="w-[15%]"> </p>
+                            </div>
+
+                            {data?.patientLabRecord?.map(
+                              (record: any, index: any) => {
+                                return (
+                                  <div
+                                    key={index}
+                                    className="flex items-center bg-white w-[100%] gap-x-4  md:gap-x-0 md:w-full p-4 text-[#5B5B5B] text-sm font-light border-b cursor-pointer last:rounded-b-[8px]"
+                                  >
+                                    <p className="w-[10%]"> {index + 1}</p>
+                                    <p className="w-[30%]">
+                                      {record?.labTestFor}
+                                    </p>
+                                    <p className="w-[30%]">{record?.lab}</p>
+                                    <p className="w-[15%]">
+                                      {record?.labResult?.length > 0
+                                        ? "Yes"
+                                        : "No"}
+                                    </p>
+                                    {record?.labResult?.length > 0 && (
+                                      <OtherButton
+                                        title="View Result"
+                                        beforeIcon={DownloadIcon}
+                                        onClick={() =>
+                                          window.open(record?.labResult)
+                                        }
+                                        className="w-[fit] px-[12px] py-[4px] text-[12px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
+                                      />
+                                    )}
+                                  </div>
+                                );
+                              }
+                            )}
+                          </div>
                         </div>
                       )}
                     </div>
-                    {data?.patientLabRecord?.length > 0 && (
-                      <div className="flex flex-col rounded-b-[12px]">
-                        <div className="overflow-x-auto overflow-y-hidden w-full">
-                          <div className="flex items-center bg-[#F4F7F9] w-[100%] gap-x-4 overflow-x-auto md:overflow-x-hidden md:gap-x-0  px-4 h-[52px] text-incoverGray text-sm ">
-                            <p className="w-[10%]">S/N</p>
-                            <p className="w-[30%]">Lab Test For</p>
-                            <p className="w-[30%]">lab</p>
-                            <p className="w-[15%}">Done?</p>
-                            <p className="w-[15%]"> </p>
-                          </div>
-
-                          {data?.patientLabRecord?.map(
-                            (record: any, index: any) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="flex items-center bg-white w-[100%] gap-x-4  md:gap-x-0 md:w-full p-4 text-[#5B5B5B] text-sm font-light border-b cursor-pointer last:rounded-b-[8px]"
-                                >
-                                  <p className="w-[10%]"> {index + 1}</p>
-                                  <p className="w-[30%]">
-                                    {record?.labTestFor}
-                                  </p>
-                                  <p className="w-[30%]">{record?.lab}</p>
-                                  <p className="w-[15%]">
-                                    {record?.labResult?.length > 0
-                                      ? "Yes"
-                                      : "No"}
-                                  </p>
-                                  {record?.labResult?.length > 0 && (
-                                    <OtherButton
-                                      title="View Result"
-                                      beforeIcon={DownloadIcon}
-                                      onClick={() =>
-                                        window.open(record?.labResult)
-                                      }
-                                      className="w-[fit] px-[12px] py-[4px] text-[12px] leading-5 font-normal border-[#6F7174] border-[0.5px]"
-                                    />
-                                  )}
-                                </div>
-                              );
-                            }
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

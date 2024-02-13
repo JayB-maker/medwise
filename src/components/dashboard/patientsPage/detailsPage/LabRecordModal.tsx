@@ -137,16 +137,12 @@ const LabRecordModal = ({
           </div>
           <div className="w-full -mt-4">
             <div className="pt-4 flex flex-col">
-              <LabRecordSection
-                labRecordList={labRecordList}
-                setLabRecordList={setLabRecordList}
-              />
               <div className="flex justify-between items-center px-10 mb-4">
                 <p className=" text-incoverGray pt-4 text-[14px] leading-[28px] font-[800]">
                   Assign a Lab Technician
                 </p>
               </div>
-              <div className="grid grid-cols-1 mb-[140px] gap-10 justify-between w-[100%] px-[32px]">
+              <div className="grid grid-cols-1 gap-10 justify-between w-[100%] px-[32px]">
                 <CustomSelect
                   control={control}
                   placeholder="Assign Lab Technician"
@@ -155,6 +151,10 @@ const LabRecordModal = ({
                   handleChange={(e, a) => handleChange(e, a)}
                 />
               </div>
+              <LabRecordSection
+                labRecordList={labRecordList}
+                setLabRecordList={setLabRecordList}
+              />
               <div className="mt-[23px] w-full px-[32px] border-solid border-0 border-t-[1px] border-incoverGrey py-[12px] sticky bottom-0 bg-white z-50">
                 <div className="flex justify-between">
                   <OutlineButton
