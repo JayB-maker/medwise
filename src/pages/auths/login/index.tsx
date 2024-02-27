@@ -1,6 +1,6 @@
 import "./Login.scss";
 import { Button } from "../../../components/ui";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { dataQueryStatus } from "../../../utils/dataQueryStatus";
@@ -138,7 +138,7 @@ const Login = () => {
               handleChange={(e, a) => handleChange(e, a)}
               required
             />
-            <p className="type4">
+            {/* <p className="type4">
               Can’t remember password?{" "}
               <Link
                 style={{ color: "#006C33", textDecoration: "underline" }}
@@ -146,7 +146,7 @@ const Login = () => {
               >
                 Recover
               </Link>
-            </p>
+            </p> */}
             <Button
               text="Login"
               className="button"

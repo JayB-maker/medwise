@@ -41,7 +41,7 @@ const AssignDoctorModal = ({
     setDetails({ ...details, [name]: target?.value });
   };
 
-  console.log(details)
+//   console.log(details)
 
   const sendEmail = (id: any) => {
     const templateParams = {

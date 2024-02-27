@@ -139,7 +139,7 @@ const LayoutSidebar = (props: ILayoutProps) => {
                         ? navbar.activeIconSRC
                         : navbar.iconSRC
                     }
-                    alt="Dropper Icon"
+                    alt="medwise Icon"
                   />
                   <h6 className={`${isSidebarExpanded ? "show" : "hide"}`}>
                     {navbar.handle}

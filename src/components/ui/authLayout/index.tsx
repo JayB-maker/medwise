@@ -17,8 +17,8 @@ const AuthLayout = (props: { children: ReactNode }) => {
             />
             <img
               src="https://res.cloudinary.com/dm19qay3n/image/upload/v1666004168/internal-dashboard/logo-white_gtteri.png"
-              alt="dropper-logo"
-              className="dropper-logo"
+              alt="medwise-logo"
+              className="medwise-logo"
             />
           </div>
         </div> */}

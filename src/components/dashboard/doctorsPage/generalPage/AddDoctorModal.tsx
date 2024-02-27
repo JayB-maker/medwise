@@ -136,7 +136,7 @@ const AddDoctorModal = ({
       ? (request.image = data.image)
       : (request.image = request.image);
 
-    console.log(request);
+    // console.log(request);
     try {
       const docRef = doc(db, "workers", data?.id);
 

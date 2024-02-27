@@ -1,9 +1,10 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import "./Layout.scss";
 import LayoutSidebar from "./LayoutSidebar";
 import LayoutHeader from "./LayoutHeader";
 // import { navbarDetails } from "../../../data/navDetails";
 import { ClickedIndexContext } from "../../../helper/Context";
+import { useNavigate } from "react-router";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -20,6 +21,13 @@ const Layout = (props: ILayoutProps) => {
   const [firstLetter] = useState("");
   const [lastLetter] = useState("");
   const [userImage] = useState("");
+  const Navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      Navigate("/login ");
+    }
+  }, []);
 
   return (
     <div className="dashboard-wrapper">
